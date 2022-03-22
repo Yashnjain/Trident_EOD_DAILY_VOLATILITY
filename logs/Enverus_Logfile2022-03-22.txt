@@ -1,0 +1,24 @@
+2022-03-22 15:10:00,009 setting paTH TO DOWNLOAD
+2022-03-22 15:10:00,010 SETTING PROFILE SETTINGS FOR FIREFOX
+2022-03-22 15:10:00,017 Adding firefox profile
+2022-03-22 15:10:00,018 
+
+2022-03-22 15:10:00,018 ====== WebDriver manager ======
+2022-03-22 15:10:00,411 Current firefox version is 98.0
+2022-03-22 15:10:00,411 Get LATEST geckodriver version for 98.0 firefox
+2022-03-22 15:10:02,111 Driver [C:\Users\Yashn.jain\.wdm\drivers\geckodriver\win64\v0.30.0\geckodriver.exe] found in cache
+2022-03-22 15:10:07,960 Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0
+2022-03-22 15:10:07,961 This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+2022-03-22 15:10:07,962 Setting use_openssl_only mode to False
+2022-03-22 15:10:14,469 query: [SELECT 1]
+2022-03-22 15:10:15,078 query execution done
+2022-03-22 15:10:15,082 query: [select * from POWERDB.PLOG.BU_CONFIG_PARAMS where PROJECT_NAME = 'TRIDENT_EOD_DA...]
+2022-03-22 15:10:15,916 query execution done
+2022-03-22 15:10:15,922 closed
+2022-03-22 15:10:16,438 No async queries seem to be running, deleting session
+2022-03-22 15:10:16,890 Execution Started
+2022-03-22 15:10:16,893 Inside remove_existing_files function
+2022-03-22 15:10:16,894 Accesing website
+2022-03-22 15:10:24,485 providing id and passwords
+2022-03-22 15:10:42,096 click on No Button
+2022-03-22 15:11:07,055 Accessing search box
