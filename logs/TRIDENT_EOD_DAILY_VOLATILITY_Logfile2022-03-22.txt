@@ -1,0 +1,33 @@
+2022-03-22 20:29:35,744 setting paTH TO DOWNLOAD
+2022-03-22 20:29:35,745 SETTING PROFILE SETTINGS FOR FIREFOX
+2022-03-22 20:29:35,753 Adding firefox profile
+2022-03-22 20:29:35,753 
+
+2022-03-22 20:29:35,754 ====== WebDriver manager ======
+2022-03-22 20:29:36,085 Current firefox version is 98.0
+2022-03-22 20:29:36,086 Get LATEST geckodriver version for 98.0 firefox
+2022-03-22 20:29:37,927 Driver [C:\Users\Yashn.jain\.wdm\drivers\geckodriver\win64\v0.30.0\geckodriver.exe] found in cache
+2022-03-22 20:29:44,293 Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0
+2022-03-22 20:29:44,294 This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+2022-03-22 20:29:44,294 Setting use_openssl_only mode to False
+2022-03-22 20:29:54,516 query: [SELECT 1]
+2022-03-22 20:29:54,946 query execution done
+2022-03-22 20:29:54,961 query: [select * from POWERDB.PLOG.BU_CONFIG_PARAMS where PROJECT_NAME = 'TRIDENT_EOD_DA...]
+2022-03-22 20:29:56,169 query execution done
+2022-03-22 20:29:56,186 closed
+2022-03-22 20:29:56,552 No async queries seem to be running, deleting session
+2022-03-22 20:30:09,148 Execution Started
+2022-03-22 20:33:51,160 Error from tabula-java:
+Error: Syntax error in page range specification
+
+
+2022-03-22 20:34:41,413 Error from tabula-java:
+Exception in thread "main" java.lang.IndexOutOfBoundsException: Page number does not exist.
+	at technology.tabula.ObjectExtractor.extractPage(ObjectExtractor.java:19)
+	at technology.tabula.PageIterator.next(PageIterator.java:30)
+	at technology.tabula.CommandLineApp.extractFile(CommandLineApp.java:161)
+	at technology.tabula.CommandLineApp.extractFileTables(CommandLineApp.java:124)
+	at technology.tabula.CommandLineApp.extractTables(CommandLineApp.java:106)
+	at technology.tabula.CommandLineApp.main(CommandLineApp.java:76)
+
+

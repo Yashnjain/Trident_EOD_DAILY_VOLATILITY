@@ -17,13 +17,14 @@ import email.mime.base
 import email.encoders as encoders
 import fitz
 import tabula
+import pandas
 
 
 locations_list=[]
 
 today_date=date.today()
 # log progress --
-logfile = os.getcwd() +"\\logs\\"+'Enverus_Logfile'+str(today_date)+'.txt'
+logfile = os.getcwd() +"\\logs\\"+'TRIDENT_EOD_DAILY_VOLATILITY_Logfile'+str(today_date)+'.txt'
 
 logging.basicConfig(filename=logfile, filemode='w',
                     format='%(asctime)s %(message)s')
@@ -196,26 +197,20 @@ def login():
     except Exception as e:
         raise e 
 def extract_pdf(download_path, file_name):
-    logging.info("Inside extract_pdf function")
-    dic= {}
-    logging.info("Empty dic created")
-
-    #extracting pdf with fitz
-    with fitz.open(download_path + '\\' + file_name) as doc:
-        pymupdf_text = ""
-        for page in doc:
-            pymupdf_text += page.get_text()
-
-    print(pymupdf_text)
-    test_area = [288.0, 30.0, 547.0 + 288.0, 544.0 + 30]
+    file2=file_name[0]
+    
+    test_area = ["293.378,50.873,525.173,569.543"]
     # mytable  = tabula.read_pdf(download_path + '\\' + file_name, output_format="json", pages=1, silent=True)
-    mytable = tabula.read_pdf(download_path + '\\' + file_name, multiple_tables=True,pages="all", area=test_area, silent=True)
-    logging.info("Mytable object created after extracting pdf with tabula")               
+    df = tabula.read_pdf(download_path + '\\' + file2, multiple_tables=True,pages="1", area=test_area, silent=True)
+    logging.info("df object created after extracting pdf with tabula")               
 def main():
     try:
-        remove_existing_files(files_location)
-        login()
-        extract_pdf()
+        # remove_existing_files(files_location)
+        # login()
+        global download_path,file_name
+        download_path=os.getcwd() + "\\Download"
+        file_name= os.listdir(os.getcwd() + "\\Download")
+        extract_pdf(download_path, file_name)
         
         
         locations_list.append(logfile)

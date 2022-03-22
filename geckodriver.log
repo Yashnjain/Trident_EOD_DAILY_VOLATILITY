@@ -1138,3 +1138,488 @@ webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
 1647945475630	Marionette	INFO	Stopped listening on port 58342
 console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
 JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+1647950898883	geckodriver	INFO	Listening on 127.0.0.1:62345
+1647950901979	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "62346" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofilejXdF9w"
+1647950902511	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofilejXdF9w\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:62346/devtools/browser/084bd4bf-7e0f-48a8-8b59-35e6bb5fb52a
+1647950905085	Marionette	INFO	Listening on port 62351
+1647950905190	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: jar:file:///C:/Program%20Files/Mozilla%20Firefox/browser/features/webcompat@mozilla.org.xpi!/experiment-apis/matchPatterns.js, line 18: NS_ERROR_MALFORMED_URI: 
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+1647950949781	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1647950951541	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1647950980177	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1647951078435	geckodriver	INFO	Listening on 127.0.0.1:62755
+1647951081518	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "62756" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofile5lJEHR"
+1647951081897	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofile5lJEHR\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:62756/devtools/browser/c5f90ecd-3ff3-4fb8-9227-b26ec4fc1a37
+1647951083871	Marionette	INFO	Listening on port 62768
+1647951084183	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: jar:file:///C:/Program%20Files/Mozilla%20Firefox/browser/features/webcompat@mozilla.org.xpi!/experiment-apis/matchPatterns.js, line 18: NS_ERROR_MALFORMED_URI: 
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+1647951136044	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1647951139246	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1647951263165	geckodriver	INFO	Listening on 127.0.0.1:63177
+1647951266260	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "63178" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofile1mgrzj"
+1647951266630	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofile1mgrzj\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:63178/devtools/browser/e2e8aa19-6c3f-48fb-ad61-7a5349e4121b
+1647951268683	Marionette	INFO	Listening on port 63184
+1647951268930	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: jar:file:///C:/Program%20Files/Mozilla%20Firefox/browser/features/webcompat@mozilla.org.xpi!/experiment-apis/matchPatterns.js, line 18: NS_ERROR_MALFORMED_URI: 
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+1647951310490	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1647951312971	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1647951354177	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1647951392010	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1647951421042	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1647951444944	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1647951468697	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1647951489811	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1647951501907	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: https://outlook.office365.com/mail/, line 297: ChunkLoadError: Loading chunk 15350 failed.
+(error: https://outlook-1.cdn.office.net/owamail/20220311006.05/scripts/owa.15350.js)
+1647951513683	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1647951534797	Marionette	INFO	Stopped listening on port 63184
+[Parent 7448, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1647956313534	geckodriver	INFO	Listening on 127.0.0.1:54102
+1647956316659	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "54103" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofileg31g7x"
+1647956317113	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofileg31g7x\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:54103/devtools/browser/c6ed8ee3-0db3-49be-a402-0afa9561da5b
+1647956319668	Marionette	INFO	Listening on port 54108
+1647956319866	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1647961177957	geckodriver	INFO	Listening on 127.0.0.1:57818
+1647961181059	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "57819" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofileryyPUe"
+1647961181532	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofileryyPUe\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:57819/devtools/browser/bbf82026-07ee-4a55-9252-3e65b81842e3
+1647961183845	Marionette	INFO	Listening on port 57825
+1647961184259	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
