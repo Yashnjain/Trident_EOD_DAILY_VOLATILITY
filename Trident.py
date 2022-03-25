@@ -244,7 +244,7 @@ def trim_process_csv(structure_name,file_name:str):
             values_letter_column = num_to_col_letters(column_list.index(values)+1)
             ws1.range(f"{values_letter_column}1").value = list1[index2]                  
         # print("Pause")
-        ws1.api.Range("I:I").EntireColumn.Delete()
+        
         last_row = ws1.range(f'A'+ str(ws1.cells.last_cell.row)).end('up').row
         ws1.api.Range("A1").EntireColumn.Insert()
         ws1.range("A1").value="STRUCTURE_NAME"
@@ -260,6 +260,7 @@ def trim_process_csv(structure_name,file_name:str):
         ws1.range(f"{insert_letter}1").value="UPDATEDATE"
         ws1.api.Range("S:S").Cut()
         ws1.api.Range("R:R").Insert(win32c.Direction.xlToRight)
+        ws1.api.Range("I:I").EntireColumn.Delete()
         ws1.autofit()
         wb.save(f"{output_location}\\{file_name}")
         try:
@@ -327,129 +328,25 @@ def snowflake_dump(df):
             database= Database
             )
     try:
-        if table_name == 'TRIDENT_EOD_DAILY_VOLATILITY':            
-            temp_tablename = f'{table_name}_TEMP'
-            temp_sql = f"""create or replace temporary table {Database}.PTEMP.{temp_tablename} 
-                        (
-                            TRADE_DATE DATE NOT NULL,
-                            STRUCTURE_NAME VARCHAR(100) NOT NULL,
-                            CONTRACT VARCHAR(50) NOT NULL,
-                            OPTION_EXPIRY DATE NOT NULL,
-                            TRADE_DAYS_TO_EXPIRY NUMBER(18,0),
-                            FUTURES_PRICE ,
-                            ATM_STRADDLE ,
-                            BREAK_EVEN ,
-                            ATM_IMP_VOL_1D_CHG ,
-                            ATM_IMP_VOL_1WK_CHG ,
-                            ATM_IMP_VOL_1MO_CHG ,
-                            REAL_VOL_AVG_HIST ,
-                            REAL_VOL_30_DAY ,
-                            IMP_VOL_10D_PUT ,
-                            IMP_VOL_25D_PUT ,
-                            IMP_VOL_ATM ,
-                            IMP_VOL_10D_CALL ,
-                            IMP_VOL_25D_CALL ,
-                            INSERTDATE ,
-                            UPDATEDATE 
-                        )"""
-            con.execute(temp_sql)
-
-            df.to_sql(temp_tablename, con=con, 
-                index=False, if_exists="append",
-                schema = 'PTEMP',
-                method=functools.partial(pd_writer, quote_identifiers=False))   
-            merge_query = f"""merge into {Database}.{SCHEMA}.{table_name} t using {Database}.PTEMP.{temp_tablename} s
-                            on 
-                            t.TRADE_DATE = s.TRADE_DATE and
-                            t.STRUCTURE_NAME = s.STRUCTURE_NAME and
-                            t.CONTRACT = s.CONTRACT and
-                            t.OPTION_EXPIRY = s.OPTION_EXPIRY and 
-                            when matched then update 
-                            set
-                            t.TRADE_DATE = s.TRADE_DATE,
-                            t.STRUCTURE_NAME = s.STRUCTURE_NAME,
-                            t.CONTRACT = s.CONTRACT,
-                            t.OPTION_EXPIRY = s.OPTION_EXPIRY,
-                            t.TRADE_DAYS_TO_EXPIRY = s.TRADE_DAYS_TO_EXPIRY,
-                            t.FUTURES_PRICE = s.FUTURES_PRICE,
-                            t.ATM_STRADDLE = s.ATM_STRADDLE,
-                            t.BREAK_EVEN = s.BREAK_EVEN,
-                            t.ATM_IMP_VOL_1D_CHG = s.ATM_IMP_VOL_1D_CHG,
-                            t.ATM_IMP_VOL_1WK_CHG = s.ATM_IMP_VOL_1WK_CHG,
-                            t.ATM_IMP_VOL_1MO_CHG = s.ATM_IMP_VOL_1MO_CHG,
-                            t.REAL_VOL_AVG_HIST = s.REAL_VOL_AVG_HIST,
-                            t.REAL_VOL_30_DAY = s.REAL_VOL_30_DAY,
-                            t.IMP_VOL_10D_PUT = s.IMP_VOL_10D_PUT,
-                            t.IMP_VOL_25D_PUT = s.IMP_VOL_25D_PUT,
-                            t.IMP_VOL_ATM = s.IMP_VOL_ATM,
-                            t.IMP_VOL_10D_CALL = s.IMP_VOL_10D_CALL,
-                            t.IMP_VOL_25D_CALL = s.IMP_VOL_25D_CALL,
-                            t.INSERTDATE = s.INSERTDATE,
-                            t.UPDATEDATE = s.UPDATEDATE
-
-
-
-                            when not matched then
-                            insert
-                            (
-                                TRADE_DATE DATE,
-                                STRUCTURE_NAME,
-                                CONTRACT,
-                                OPTION_EXPIRY DATE,
-                                TRADE_DAYS_TO_EXPIRY,
-                                FUTURES_PRICE,
-                                ATM_STRADDLE,
-                                BREAK_EVEN,
-                                ATM_IMP_VOL_1D_CHG,
-                                ATM_IMP_VOL_1WK_CHG,
-                                ATM_IMP_VOL_1MO_CHG,
-                                REAL_VOL_AVG_HIST,
-                                REAL_VOL_30_DAY,
-                                IMP_VOL_10D_PUT,
-                                IMP_VOL_25D_PUT,
-                                IMP_VOL_ATM,
-                                IMP_VOL_10D_CALL,
-                                IMP_VOL_25D_CALL,
-                                INSERTDATE,
-                                UPDATEDATE
-                            )
-                            values
-                            (
-                                s.TRADE_DATE DATE,
-                                s.STRUCTURE_NAME,
-                                s.CONTRACT,
-                                s.OPTION_EXPIRY DATE,
-                                s.TRADE_DAYS_TO_EXPIRY,
-                                s.FUTURES_PRICE,
-                                s.ATM_STRADDLE,
-                                s.BREAK_EVEN,
-                                s.ATM_IMP_VOL_1D_CHG,
-                                s.ATM_IMP_VOL_1WK_CHG,
-                                s.ATM_IMP_VOL_1MO_CHG,
-                                s.REAL_VOL_AVG_HIST,
-                                s.REAL_VOL_30_DAY,
-                                s.IMP_VOL_10D_PUT,
-                                s.IMP_VOL_25D_PUT,
-                                s.IMP_VOL_ATM,
-                                s.IMP_VOL_10D_CALL,
-                                s.IMP_VOL_25D_CALL,
-                                s.INSERTDATE,
-                                s.UPDATEDATE
-                            )
-                            """
-            con.execute(merge_query)
+        query = f"""select * from "POWERDB_DEV"."PMACRO"."TRIDENT_EOD_DAILY_VOLATILITY" where                    
+        TRADE_DATE = '{Trade_date}' and STRUCTURE_NAME = '{df["STRUCTURE_NAME"][0]}' and CONTRACT = '{df["CONTRACT"][0]}' and OPTION_EXPIRY = '{df["OPTION_EXPIRY"][0]}'"""            
+        
         with engine.connect() as con:
-            csv.to_sql('TRIDENT_EOD_DAILY_VOLATILITY', con=con,if_exists='append',index = False)
+            db_df=engine.execute(query)
+            if len(db_df)>0:
+                pass
+            else:
+                df.to_sql('TRIDENT_EOD_DAILY_VOLATILITY', con=con,if_exists='append',index = False)
     except Exception as e:
         logger.exception(f"error occurred : {e}")
     finally:
         engine.dispose()
 def main():
     try:
-        # remove_existing_files(files_location)
-        # login_and_download()
+        remove_existing_files(files_location)
+        login_and_download()
         read_pdf()
-        csv_to_dataframe()
+        df=csv_to_dataframe()
         snowflake_dump(df)       
         locations_list.append(logfile)
         send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name}',mail_body = f'{job_name} completed successfully, Attached PDF and Logs',attachment_locations = locations_list)
