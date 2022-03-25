@@ -1,3 +1,6 @@
+from ast import Global
+import csv
+from operator import index
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -6,7 +9,6 @@ from datetime import date
 import logging
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.firefox import GeckoDriverManager
-import sharepy
 import os
 from bu_config import get_config
 import bu_alerts
@@ -15,12 +17,13 @@ import email.mime.multipart
 import email.mime.text
 import email.mime.base
 import email.encoders as encoders
-import fitz
 import tabula
-import pandas
 import xlwings.constants as win32c
 import xlwings as xw
-
+import bu_snowflake
+import pandas as pd
+from snowflake.connector.pandas_tools import pd_writer
+import functools
 
 locations_list=[]
 
@@ -56,19 +59,19 @@ driver=webdriver.Firefox(executable_path=GeckoDriverManager().install(),firefox_
 credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
 username = credential_dict['USERNAME'].split(';')[0]
 password = credential_dict['PASSWORD'].split(';')[0]
-# sp_username = credential_dict['USERNAME'].split(';')[1]
-# sp_password =  credential_dict['PASSWORD'].split(';')[1]
-# share_point_path = '/'.join(credential_dict['API_KEY'].split('/')[4:])
-# temp_path = credential_dict['API_KEY']
+table_name = credential_dict['TABLE_NAME']
+Database = credential_dict['DATABASE']
+SCHEMA = credential_dict['TABLE_SCHEMA']
 # receiver_email = credential_dict['EMAIL_LIST'].split(';')[0]
 receiver_email = 'yashn.jain@biourja.com'
 download_path=os.getcwd() + "\\Download"
 file_name= os.listdir(os.getcwd() + "\\Download")
-output_location= os.getcwd()
+output_location= os.getcwd()+"\\Generated_CSV"
 today_date=date.today()
 download_path=os.getcwd() + "\\Download"
 file_name= os.listdir(os.getcwd() + "\\Download")
 file2=file_name[0]
+
 test_area_date = ["67,47,85,160"]
 df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
 Trade_date=df_date[0].columns[1]
@@ -241,7 +244,7 @@ def trim_process_csv(structure_name,file_name:str):
             values_letter_column = num_to_col_letters(column_list.index(values)+1)
             ws1.range(f"{values_letter_column}1").value = list1[index2]                  
         # print("Pause")
-        ws1.autofit()
+        ws1.api.Range("I:I").EntireColumn.Delete()
         last_row = ws1.range(f'A'+ str(ws1.cells.last_cell.row)).end('up').row
         ws1.api.Range("A1").EntireColumn.Insert()
         ws1.range("A1").value="STRUCTURE_NAME"
@@ -257,6 +260,7 @@ def trim_process_csv(structure_name,file_name:str):
         ws1.range(f"{insert_letter}1").value="UPDATEDATE"
         ws1.api.Range("S:S").Cut()
         ws1.api.Range("R:R").Insert(win32c.Direction.xlToRight)
+        ws1.autofit()
         wb.save(f"{output_location}\\{file_name}")
         try:
             wb.app.quit()
@@ -302,14 +306,151 @@ def read_pdf():
                 break
         print("Done")
     except Exception as e:
-        print(e)           
+        print(e) 
+def csv_to_dataframe():
+    try:
+        csvsToUpload = os.listdir(f"{output_location}")
+        df = pd.DataFrame()
+        for files in csvsToUpload:
+            data = pd.read_csv (f"{output_location}\\{files}")   
+            df1 = pd.DataFrame(data)
+            df = df.append(df1, ignore_index=True)
+        return df    
+    except Exception as e:
+        print(e)
+def snowflake_dump(df):
+    engine = bu_snowflake.get_engine(
+            username= "YASH",
+            password= "Yash22",
+            role= "POWERDB_DEV",
+            schema= SCHEMA,
+            database= Database
+            )
+    try:
+        if table_name == 'TRIDENT_EOD_DAILY_VOLATILITY':            
+            temp_tablename = f'{table_name}_TEMP'
+            temp_sql = f"""create or replace temporary table {Database}.PTEMP.{temp_tablename} 
+                        (
+                            TRADE_DATE DATE NOT NULL,
+                            STRUCTURE_NAME VARCHAR(100) NOT NULL,
+                            CONTRACT VARCHAR(50) NOT NULL,
+                            OPTION_EXPIRY DATE NOT NULL,
+                            TRADE_DAYS_TO_EXPIRY NUMBER(18,0),
+                            FUTURES_PRICE ,
+                            ATM_STRADDLE ,
+                            BREAK_EVEN ,
+                            ATM_IMP_VOL_1D_CHG ,
+                            ATM_IMP_VOL_1WK_CHG ,
+                            ATM_IMP_VOL_1MO_CHG ,
+                            REAL_VOL_AVG_HIST ,
+                            REAL_VOL_30_DAY ,
+                            IMP_VOL_10D_PUT ,
+                            IMP_VOL_25D_PUT ,
+                            IMP_VOL_ATM ,
+                            IMP_VOL_10D_CALL ,
+                            IMP_VOL_25D_CALL ,
+                            INSERTDATE ,
+                            UPDATEDATE 
+                        )"""
+            con.execute(temp_sql)
+
+            df.to_sql(temp_tablename, con=con, 
+                index=False, if_exists="append",
+                schema = 'PTEMP',
+                method=functools.partial(pd_writer, quote_identifiers=False))   
+            merge_query = f"""merge into {Database}.{SCHEMA}.{table_name} t using {Database}.PTEMP.{temp_tablename} s
+                            on 
+                            t.TRADE_DATE = s.TRADE_DATE and
+                            t.STRUCTURE_NAME = s.STRUCTURE_NAME and
+                            t.CONTRACT = s.CONTRACT and
+                            t.OPTION_EXPIRY = s.OPTION_EXPIRY and 
+                            when matched then update 
+                            set
+                            t.TRADE_DATE = s.TRADE_DATE,
+                            t.STRUCTURE_NAME = s.STRUCTURE_NAME,
+                            t.CONTRACT = s.CONTRACT,
+                            t.OPTION_EXPIRY = s.OPTION_EXPIRY,
+                            t.TRADE_DAYS_TO_EXPIRY = s.TRADE_DAYS_TO_EXPIRY,
+                            t.FUTURES_PRICE = s.FUTURES_PRICE,
+                            t.ATM_STRADDLE = s.ATM_STRADDLE,
+                            t.BREAK_EVEN = s.BREAK_EVEN,
+                            t.ATM_IMP_VOL_1D_CHG = s.ATM_IMP_VOL_1D_CHG,
+                            t.ATM_IMP_VOL_1WK_CHG = s.ATM_IMP_VOL_1WK_CHG,
+                            t.ATM_IMP_VOL_1MO_CHG = s.ATM_IMP_VOL_1MO_CHG,
+                            t.REAL_VOL_AVG_HIST = s.REAL_VOL_AVG_HIST,
+                            t.REAL_VOL_30_DAY = s.REAL_VOL_30_DAY,
+                            t.IMP_VOL_10D_PUT = s.IMP_VOL_10D_PUT,
+                            t.IMP_VOL_25D_PUT = s.IMP_VOL_25D_PUT,
+                            t.IMP_VOL_ATM = s.IMP_VOL_ATM,
+                            t.IMP_VOL_10D_CALL = s.IMP_VOL_10D_CALL,
+                            t.IMP_VOL_25D_CALL = s.IMP_VOL_25D_CALL,
+                            t.INSERTDATE = s.INSERTDATE,
+                            t.UPDATEDATE = s.UPDATEDATE
+
+
+
+                            when not matched then
+                            insert
+                            (
+                                TRADE_DATE DATE,
+                                STRUCTURE_NAME,
+                                CONTRACT,
+                                OPTION_EXPIRY DATE,
+                                TRADE_DAYS_TO_EXPIRY,
+                                FUTURES_PRICE,
+                                ATM_STRADDLE,
+                                BREAK_EVEN,
+                                ATM_IMP_VOL_1D_CHG,
+                                ATM_IMP_VOL_1WK_CHG,
+                                ATM_IMP_VOL_1MO_CHG,
+                                REAL_VOL_AVG_HIST,
+                                REAL_VOL_30_DAY,
+                                IMP_VOL_10D_PUT,
+                                IMP_VOL_25D_PUT,
+                                IMP_VOL_ATM,
+                                IMP_VOL_10D_CALL,
+                                IMP_VOL_25D_CALL,
+                                INSERTDATE,
+                                UPDATEDATE
+                            )
+                            values
+                            (
+                                s.TRADE_DATE DATE,
+                                s.STRUCTURE_NAME,
+                                s.CONTRACT,
+                                s.OPTION_EXPIRY DATE,
+                                s.TRADE_DAYS_TO_EXPIRY,
+                                s.FUTURES_PRICE,
+                                s.ATM_STRADDLE,
+                                s.BREAK_EVEN,
+                                s.ATM_IMP_VOL_1D_CHG,
+                                s.ATM_IMP_VOL_1WK_CHG,
+                                s.ATM_IMP_VOL_1MO_CHG,
+                                s.REAL_VOL_AVG_HIST,
+                                s.REAL_VOL_30_DAY,
+                                s.IMP_VOL_10D_PUT,
+                                s.IMP_VOL_25D_PUT,
+                                s.IMP_VOL_ATM,
+                                s.IMP_VOL_10D_CALL,
+                                s.IMP_VOL_25D_CALL,
+                                s.INSERTDATE,
+                                s.UPDATEDATE
+                            )
+                            """
+            con.execute(merge_query)
+        with engine.connect() as con:
+            csv.to_sql('TRIDENT_EOD_DAILY_VOLATILITY', con=con,if_exists='append',index = False)
+    except Exception as e:
+        logger.exception(f"error occurred : {e}")
+    finally:
+        engine.dispose()
 def main():
     try:
-        remove_existing_files(files_location)
-        login_and_download()
+        # remove_existing_files(files_location)
+        # login_and_download()
         read_pdf()
-        
-        
+        csv_to_dataframe()
+        snowflake_dump(df)       
         locations_list.append(logfile)
         send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name}',mail_body = f'{job_name} completed successfully, Attached PDF and Logs',attachment_locations = locations_list)
     except Exception as e:
@@ -319,7 +460,7 @@ def main():
 if __name__ == "__main__": 
     logging.info("Execution Started")
     time_start=time.time()
-    directories_created=["Download","Logs"]
+    directories_created=["Download","Logs","Generated_CSV"]
     for directory in directories_created:
         path3 = os.path.join(os.getcwd(),directory)  
         try:
