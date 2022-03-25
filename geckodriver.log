@@ -1623,3 +1623,58 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 DevTools listening on ws://localhost:57819/devtools/browser/bbf82026-07ee-4a55-9252-3e65b81842e3
 1647961183845	Marionette	INFO	Listening on port 57825
 1647961184259	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1648043731133	geckodriver	INFO	Listening on 127.0.0.1:61801
+1648043734269	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "61802" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofileR6qDce"
+1648043735452	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofileR6qDce\\search.json.mozlz4", (void 0)))
+1648043758356	geckodriver	INFO	Listening on 127.0.0.1:61866
+1648043761490	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "61867" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofile8sRN8u"
+1648043761852	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofile8sRN8u\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:61867/devtools/browser/0d20ab61-a065-41e0-8757-371f8893f72c
+1648043764957	Marionette	INFO	Listening on port 61875
+1648043765192	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: jar:file:///C:/Program%20Files/Mozilla%20Firefox/browser/features/webcompat@mozilla.org.xpi!/experiment-apis/matchPatterns.js, line 18: NS_ERROR_MALFORMED_URI: 
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://login.microsoftonline.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: gRecipeManager is null
+1648043797329	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1648043797993	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1648043849121	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+1648043854941	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: https://outlook.office365.com/mail/, line 297: ChunkLoadError: Loading chunk 15350 failed.
+(error: https://outlook-1.cdn.office.net/owamail/20220311006.07/scripts/owa.15350.js)
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
+JavaScript error: resource://gre/modules/WebRequest.jsm, line 756: TypeError: this.activityErrorsMap is undefined
