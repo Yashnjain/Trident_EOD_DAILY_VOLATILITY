@@ -424,10 +424,10 @@ def snowflake_dump(df,Trade_date):
         engine.dispose()
 def main():
     try:
-        # logger.info("into remove_existing_files funtion")
-        # remove_existing_files(files_location)
-        # logger.info("into login_and_download")
-        # login_and_download()
+        logger.info("into remove_existing_files funtion")
+        remove_existing_files(files_location)
+        logger.info("into login_and_download")
+        login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
