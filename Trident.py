@@ -60,8 +60,7 @@ password = credential_dict['PASSWORD']
 table_name = credential_dict['TABLE_NAME']
 Database = credential_dict['DATABASE']
 SCHEMA = credential_dict['TABLE_SCHEMA']
-# receiver_email = credential_dict['EMAIL_LIST']
-receiver_email = 'yashn.jain@biourja.com'
+receiver_email = credential_dict['EMAIL_LIST']
 download_path=os.getcwd() + "\\Download"
 file_name= os.listdir(os.getcwd() + "\\Download")
 output_location= os.getcwd()+"\\Generated_CSV"
@@ -413,11 +412,11 @@ def snowflake_dump(df,Trade_date):
         logger.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
+            no_of_rows=len(db_df)
             if len(db_df)>0:
                 pass
             else:
                 df.to_sql('TRIDENT_EOD_DAILY_VOLATILITY', con=con,if_exists='append',index = False,method=functools.partial(pd_writer, quote_identifiers=False))
-                no_of_rows=len(db_df)
         return no_of_rows 
     except Exception as e:
         logger.exception(f"error occurred : {e}")
@@ -439,9 +438,9 @@ def main():
         logger.info("appending file for mail")     
         locations_list.append(logfile)
         if no_of_rows>0:
-            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
+            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Already inserted previously and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
         else:
-            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
+            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
     except Exception as e:
         logging.exception(str(e))
         bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
