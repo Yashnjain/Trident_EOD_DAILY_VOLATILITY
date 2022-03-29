@@ -78,6 +78,8 @@ def trade_date():
     except Exception as e:
         logger.info(e)
         raise e
+
+
 def num_to_col_letters(num):
     try:
         letters = ''
@@ -89,6 +91,7 @@ def num_to_col_letters(num):
     except Exception as e:
         logger.info(e)
         raise e
+
 
 def send_mail(receiver_email: str, mail_subject: str, mail_body: str, attachment_locations: list = None, sender_email: str = None, sender_password: str=None) -> bool:
     """The Function responsible to do all the mail sending logic.
@@ -150,6 +153,8 @@ def send_mail(receiver_email: str, mail_subject: str, mail_body: str, attachment
             f"Could not send the email, error occured, More Details : {e}")
     finally:
         return done
+
+
 def remove_existing_files(files_location):
     """_summary_
 
@@ -172,6 +177,7 @@ def remove_existing_files(files_location):
     except Exception as e:
         logger.info(e)
         raise e
+
 
 def login_and_download():  
     '''This function downloads log in to the website'''
@@ -246,7 +252,8 @@ def login_and_download():
         driver.close()
     except Exception as e:
         raise e 
-       
+
+
 def trim_process_csv(Trade_date,structure_name,file_name:str):
     try:
         logging.info("into trim_process_csv")
@@ -306,7 +313,9 @@ def trim_process_csv(Trade_date,structure_name,file_name:str):
             wb.app.quit()          
     except Exception as e:
         logger.info(e)
-        pass          
+        pass 
+
+
 def read_pdf(Trade_date):
     try:
         file_name= os.listdir(os.getcwd() + "\\Download")
@@ -361,6 +370,8 @@ def read_pdf(Trade_date):
     except Exception as e:
         logger.info(e)
         print(e) 
+
+
 def csv_to_dataframe():
     try:
         logger.info("into csv_to_dataframe")
@@ -395,6 +406,8 @@ def csv_to_dataframe():
     except Exception as e:
         logger.info(e)
         print(e)
+
+
 def snowflake_dump(df,Trade_date):
     logger.info("creating engine object and providing credentials")
     engine = bu_snowflake.get_engine(
@@ -422,12 +435,14 @@ def snowflake_dump(df,Trade_date):
         logger.exception(f"error occurred : {e}")
     finally:
         engine.dispose()
+
+
 def main():
     try:
-        logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # logger.info("into remove_existing_files funtion")
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
@@ -444,6 +459,7 @@ def main():
     except Exception as e:
         logging.exception(str(e))
         bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
+  
                
 if __name__ == "__main__": 
     logging.info("Execution Started")
