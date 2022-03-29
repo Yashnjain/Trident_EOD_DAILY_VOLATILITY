@@ -74,6 +74,8 @@ def trade_date():
         test_area_date = ["67,47,85,160"]
         df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
         Trade_date=df_date[0].columns[1]
+        date=datetime.strptime(Trade_date, "%m/%d/%Y")
+        Trade_date = date.strftime('%Y-%d-%m')
         return Trade_date
     except Exception as e:
         logger.info(e)
@@ -400,8 +402,8 @@ def csv_to_dataframe():
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
         df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%Y-%d-%m').astype(str)
+        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
         return df    
     except Exception as e:
         logger.info(e)
@@ -419,17 +421,18 @@ def snowflake_dump(df,Trade_date):
             )
     logger.info("connection initaited")        
     try:
+        date=datetime.strptime(Trade_date, "%Y-%d-%m")
+        Trade_date = date.strftime('%Y-%m-%d')
         logger.info("query to check data")
-        query = f"""select * from "POWERDB_DEV"."PMACRO"."TRIDENT_EOD_DAILY_VOLATILITY" where                    
-        TRADE_DATE = date('{Trade_date}')"""            
+        query = f"select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE = '{Trade_date}'"           
         logger.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
-            no_of_rows=len(db_df)
             if len(db_df)>0:
-                pass
+                no_of_rows=0
             else:
                 df.to_sql('TRIDENT_EOD_DAILY_VOLATILITY', con=con,if_exists='append',index = False,method=functools.partial(pd_writer, quote_identifiers=False))
+                no_of_rows=len(df)
         return no_of_rows 
     except Exception as e:
         logger.exception(f"error occurred : {e}")
@@ -440,10 +443,10 @@ def snowflake_dump(df,Trade_date):
 
 def main():
     try:
-        logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # logger.info("into remove_existing_files funtion")
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
@@ -454,9 +457,9 @@ def main():
         logger.info("appending file for mail")     
         locations_list.append(logfile)
         if no_of_rows>0:
-            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Already inserted previously and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
-        else:
             send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
+        else:
+            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Already inserted previously and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
     except Exception as e:
         logging.exception(str(e))
         bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
