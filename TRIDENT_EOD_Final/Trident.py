@@ -433,16 +433,17 @@ def snowflake_dump(df,Trade_date):
         return no_of_rows 
     except Exception as e:
         logger.exception(f"error occurred : {e}")
+        print(e)
     finally:
         engine.dispose()
 
 
 def main():
     try:
-        # logger.info("into remove_existing_files funtion")
-        # remove_existing_files(files_location)
-        # logger.info("into login_and_download")
-        # login_and_download()
+        logger.info("into remove_existing_files funtion")
+        remove_existing_files(files_location)
+        logger.info("into login_and_download")
+        login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
@@ -459,8 +460,8 @@ def main():
     except Exception as e:
         logging.exception(str(e))
         bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
-  
-               
+
+
 if __name__ == "__main__": 
     logging.info("Execution Started")
     time_start=time.time()
