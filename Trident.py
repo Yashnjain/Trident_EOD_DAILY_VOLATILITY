@@ -362,7 +362,7 @@ def snowflake_dump(df,Trade_date):
         return no_of_rows 
     except Exception as e:
         logger.exception(f"error occurred : {e}")
-        print(e)
+        raise(e)
     finally:
         engine.dispose()
 
