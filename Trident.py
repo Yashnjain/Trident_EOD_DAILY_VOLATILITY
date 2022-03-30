@@ -249,7 +249,7 @@ def read_pdf(Trade_date):
         column_values0=["82","114","151","181","213","242","273","296","327","357","391","420","450","481","509","539"]
         test_area0 = ["293.378,50,526.173,569.543"]
         column_values1=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]
-        test_area1=["282.996","50.0","506.376","567.905"]
+        test_area1=["282.996","50.0","508","568"]
         test_area2=["530.0","50.0","584","568"]
         column_values2=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]
         logger.info("reading full page tables")
@@ -366,10 +366,10 @@ def snowflake_dump(df,Trade_date):
 
 def main():
     try:
-        logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # logger.info("into remove_existing_files funtion")
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
