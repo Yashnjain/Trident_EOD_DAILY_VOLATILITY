@@ -1,106 +1,104 @@
-2022-03-30 15:46:48,017 setting paTH TO DOWNLOAD
-2022-03-30 15:46:48,017 SETTING PROFILE SETTINGS FOR FIREFOX
-2022-03-30 15:46:48,033 Adding firefox profile
-2022-03-30 15:46:48,033 
+2022-03-30 16:21:24,500 setting paTH TO DOWNLOAD
+2022-03-30 16:21:24,500 SETTING PROFILE SETTINGS FOR FIREFOX
+2022-03-30 16:21:24,508 Adding firefox profile
+2022-03-30 16:21:24,509 
 
-2022-03-30 15:46:48,033 ====== WebDriver manager ======
-2022-03-30 15:46:48,485 Current firefox version is 98.0
-2022-03-30 15:46:48,485 Get LATEST geckodriver version for 98.0 firefox
-2022-03-30 15:46:48,961 Driver [C:\Users\Yashn.jain\.wdm\drivers\geckodriver\win64\v0.30.0\geckodriver.exe] found in cache
-2022-03-30 15:46:54,782 Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0
-2022-03-30 15:46:54,788 This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
-2022-03-30 15:46:54,788 Setting use_openssl_only mode to False
-2022-03-30 15:46:56,722 query: [SELECT 1]
-2022-03-30 15:46:57,005 query execution done
-2022-03-30 15:46:57,020 query: [select * from POWERDB.PLOG.BU_CONFIG_PARAMS where PROJECT_NAME = 'TRIDENT_EOD_DA...]
-2022-03-30 15:46:57,292 query execution done
-2022-03-30 15:46:57,308 closed
-2022-03-30 15:46:57,608 No async queries seem to be running, deleting session
-2022-03-30 15:46:57,912 Execution Started
-2022-03-30 15:46:57,912 Creating required directories
-2022-03-30 15:46:57,925 Into the main function
-2022-03-30 15:46:58,669 into read_pdf
-2022-03-30 15:46:58,670 testing areas and column seperator values
-2022-03-30 15:46:58,670 reading full page tables
-2022-03-30 15:46:59,578 applying check for index and extracting tables
-2022-03-30 15:46:59,578 picking up structure name from the table
-2022-03-30 15:47:00,153 picking up table and converting it to csv
-2022-03-30 15:47:00,816 trimming the table
-2022-03-30 15:47:00,816 into trim_process_csv
-2022-03-30 15:47:00,816 Opening operating workbook instance of excel
-2022-03-30 15:47:01,870 Execution for trimming data Started
-2022-03-30 15:47:01,997 Deleting columns
-2022-03-30 15:47:02,051 Changing column names as per snowflake table
-2022-03-30 15:47:02,448 Inserting extra columns as per snowflake table and inserting their values
-2022-03-30 15:47:02,657 Interchanging last two columns
-2022-03-30 15:47:02,845 deleting ATM VOL column
-2022-03-30 15:47:02,868 Applying autofit and saving the file
-2022-03-30 15:47:03,135 quitting app instance of excel
-2022-03-30 15:47:03,144 picking up structure name from the table
-2022-03-30 15:47:04,117 picking up table and converting it to csv
-2022-03-30 15:47:04,924 trimming the table
-2022-03-30 15:47:04,924 into trim_process_csv
-2022-03-30 15:47:04,924 Opening operating workbook instance of excel
-2022-03-30 15:47:06,161 Execution for trimming data Started
-2022-03-30 15:47:06,188 Deleting columns
-2022-03-30 15:47:06,241 Changing column names as per snowflake table
-2022-03-30 15:47:06,687 Inserting extra columns as per snowflake table and inserting their values
-2022-03-30 15:47:06,886 Interchanging last two columns
-2022-03-30 15:47:07,086 deleting ATM VOL column
-2022-03-30 15:47:07,106 Applying autofit and saving the file
-2022-03-30 15:47:07,480 quitting app instance of excel
-2022-03-30 15:47:07,500 applying check for index and extracting tables
-2022-03-30 15:47:07,500 picking up structure name from the table
-2022-03-30 15:47:08,491 picking up table and converting it to csv
-2022-03-30 15:47:09,480 trimming the table
-2022-03-30 15:47:09,480 into trim_process_csv
-2022-03-30 15:47:09,480 Opening operating workbook instance of excel
-2022-03-30 15:47:10,769 Execution for trimming data Started
-2022-03-30 15:47:10,888 Deleting columns
-2022-03-30 15:47:10,930 Changing column names as per snowflake table
-2022-03-30 15:47:11,499 Inserting extra columns as per snowflake table and inserting their values
-2022-03-30 15:47:11,623 Interchanging last two columns
-2022-03-30 15:47:11,833 deleting ATM VOL column
-2022-03-30 15:47:11,855 Applying autofit and saving the file
-2022-03-30 15:47:12,273 quitting app instance of excel
-2022-03-30 15:47:12,289 into csv_to_dataframe
-2022-03-30 15:47:12,290 into csv_to_dataframe
-2022-03-30 15:47:12,290 creating empty dataframe
-2022-03-30 15:47:12,292 appending individual csv's data to dataframe and then appending those values to empty dataframe
-2022-03-30 15:47:13,319 into snowflake_dump
-2022-03-30 15:47:13,319 creating engine object and providing credentials
-2022-03-30 15:47:14,323 Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0
-2022-03-30 15:47:14,323 This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
-2022-03-30 15:47:16,402 query: [ROLLBACK]
-2022-03-30 15:47:16,715 query execution done
-2022-03-30 15:47:16,731 query: [SELECT 1]
-2022-03-30 15:47:16,986 query execution done
-2022-03-30 15:47:17,003 query: [ROLLBACK]
-2022-03-30 15:47:17,265 query execution done
-2022-03-30 15:47:17,265 connection initaited
-2022-03-30 15:47:17,265 query to check data
-2022-03-30 15:47:17,276 applying check for values in snowflake table and inserting data
-2022-03-30 15:47:17,276 query: [select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE =...]
-2022-03-30 15:47:17,570 query execution done
-2022-03-30 15:48:00,758 query: [DESC TABLE /* sqlalchemy:_has_object */ "TRIDENT_EOD_DAILY_VOLATILITY"]
-2022-03-30 15:48:01,035 query execution done
-2022-03-30 15:48:01,036 query: [create temporary stage /* Python:snowflake.connector.pandas_tools.write_pandas()...]
-2022-03-30 15:48:01,354 query execution done
-2022-03-30 15:48:01,445 query: [PUT /* Python:snowflake.connector.pandas_tools.write_pandas() */ 'file://C:\\Use...]
-2022-03-30 15:48:01,790 query execution done
-2022-03-30 15:48:03,966 query: [COPY INTO TRIDENT_EOD_DAILY_VOLATILITY /* Python:snowflake.connector.pandas_tool...]
-2022-03-30 15:48:05,950 query execution done
-2022-03-30 15:48:05,950 query: [COMMIT]
-2022-03-30 15:48:06,238 query execution done
-2022-03-30 15:48:06,238 query: [SHOW /* sqlalchemy:get_table_names */ TABLES IN pmacro]
-2022-03-30 15:48:06,583 query execution done
-2022-03-30 15:48:10,588 query: [ROLLBACK]
-2022-03-30 15:48:10,884 query execution done
-2022-03-30 15:48:13,889 closed
-2022-03-30 15:48:14,124 No async queries seem to be running, deleting session
-2022-03-30 15:48:14,417 appending file for mail
-2022-03-30 15:49:42,365 INTO THE SEND MAIL FUNCTION
-2022-03-30 15:49:42,365 GIVING CREDENTIALS FOR SENDING MAIL
-2022-03-30 15:49:42,366 Attaching mail body
-2022-03-30 15:49:42,367 Attching files in the mail
-2022-03-30 15:49:52,414 Email sent successfully
+2022-03-30 16:21:24,509 ====== WebDriver manager ======
+2022-03-30 16:21:24,942 Current firefox version is 98.0
+2022-03-30 16:21:24,942 Get LATEST geckodriver version for 98.0 firefox
+2022-03-30 16:21:26,442 Driver [C:\Users\Yashn.jain\.wdm\drivers\geckodriver\win64\v0.30.0\geckodriver.exe] found in cache
+2022-03-30 16:21:32,789 Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0
+2022-03-30 16:21:32,790 This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+2022-03-30 16:21:32,790 Setting use_openssl_only mode to False
+2022-03-30 16:21:41,979 query: [SELECT 1]
+2022-03-30 16:21:42,987 query execution done
+2022-03-30 16:21:42,990 query: [select * from POWERDB.PLOG.BU_CONFIG_PARAMS where PROJECT_NAME = 'TRIDENT_EOD_DA...]
+2022-03-30 16:21:43,821 query execution done
+2022-03-30 16:21:43,849 closed
+2022-03-30 16:21:44,568 No async queries seem to be running, deleting session
+2022-03-30 16:21:45,367 Execution Started
+2022-03-30 16:21:45,367 Creating required directories
+2022-03-30 16:21:45,369 Into the main function
+2022-03-30 16:21:45,370 into remove_existing_files funtion
+2022-03-30 16:21:45,370 Inside remove_existing_files function
+2022-03-30 16:21:45,372 into login_and_download
+2022-03-30 16:21:45,372 Accesing website
+2022-03-30 16:22:11,444 providing id and passwords
+2022-03-30 16:22:31,319 click on No Button
+2022-03-30 16:23:06,683 Accessing search box
+2022-03-30 16:23:12,091 setting search for only inbox
+2022-03-30 16:23:27,062 Accessing search box
+2022-03-30 16:23:32,357 setting search for only inbox
+2022-03-30 16:23:43,110 Clearing Search Bar
+2022-03-30 16:23:53,484 Setting search for manan ahuja
+2022-03-30 16:24:10,898 Clicking recent mail
+2022-03-30 16:24:35,535 Clicking more action button
+2022-03-30 16:24:46,853 Clicking download button
+2022-03-30 16:25:24,070 into read_pdf
+2022-03-30 16:25:24,071 testing areas and column seperator values
+2022-03-30 16:25:24,071 reading full page tables
+2022-03-30 16:25:24,982 applying check for index and extracting tables
+2022-03-30 16:25:24,982 picking up structure name from the table
+2022-03-30 16:25:25,575 picking up table and converting it to csv
+2022-03-30 16:25:26,279 trimming the table
+2022-03-30 16:25:26,279 into trim_process_csv
+2022-03-30 16:25:26,279 Opening operating workbook instance of excel
+2022-03-30 16:25:27,622 Execution for trimming data Started
+2022-03-30 16:25:27,678 Deleting columns
+2022-03-30 16:25:27,793 Changing column names as per snowflake table
+2022-03-30 16:25:28,293 Inserting extra columns as per snowflake table and inserting their values
+2022-03-30 16:25:28,434 Interchanging last two columns
+2022-03-30 16:25:28,613 deleting ATM VOL column
+2022-03-30 16:25:28,639 Applying autofit and saving the file
+2022-03-30 16:25:28,924 quitting app instance of excel
+2022-03-30 16:25:28,936 picking up structure name from the table
+2022-03-30 16:25:29,600 picking up table and converting it to csv
+2022-03-30 16:25:30,266 trimming the table
+2022-03-30 16:25:30,267 into trim_process_csv
+2022-03-30 16:25:30,267 Opening operating workbook instance of excel
+2022-03-30 16:25:31,329 Execution for trimming data Started
+2022-03-30 16:25:31,360 Deleting columns
+2022-03-30 16:25:31,409 Changing column names as per snowflake table
+2022-03-30 16:25:31,765 Inserting extra columns as per snowflake table and inserting their values
+2022-03-30 16:25:31,876 Interchanging last two columns
+2022-03-30 16:25:32,053 deleting ATM VOL column
+2022-03-30 16:25:32,074 Applying autofit and saving the file
+2022-03-30 16:25:32,314 quitting app instance of excel
+2022-03-30 16:25:32,324 applying check for index and extracting tables
+2022-03-30 16:25:32,325 picking up structure name from the table
+2022-03-30 16:25:32,986 picking up table and converting it to csv
+2022-03-30 16:25:33,851 trimming the table
+2022-03-30 16:25:33,852 into trim_process_csv
+2022-03-30 16:25:33,852 Opening operating workbook instance of excel
+2022-03-30 16:25:35,075 Execution for trimming data Started
+2022-03-30 16:25:35,115 Deleting columns
+2022-03-30 16:25:35,156 Changing column names as per snowflake table
+2022-03-30 16:25:35,698 Inserting extra columns as per snowflake table and inserting their values
+2022-03-30 16:25:35,859 Interchanging last two columns
+2022-03-30 16:25:36,165 deleting ATM VOL column
+2022-03-30 16:25:36,207 Applying autofit and saving the file
+2022-03-30 16:25:36,559 quitting app instance of excel
+2022-03-30 16:25:36,585 into csv_to_dataframe
+2022-03-30 16:25:36,585 into csv_to_dataframe
+2022-03-30 16:25:36,586 creating empty dataframe
+2022-03-30 16:25:36,587 appending individual csv's data to dataframe and then appending those values to empty dataframe
+2022-03-30 16:25:44,145 into snowflake_dump
+2022-03-30 16:25:44,145 creating engine object and providing credentials
+2022-03-30 16:25:45,100 Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0
+2022-03-30 16:25:45,101 This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+2022-03-30 16:25:47,792 query: [ROLLBACK]
+2022-03-30 16:25:48,148 query execution done
+2022-03-30 16:25:48,149 query: [SELECT 1]
+2022-03-30 16:25:48,914 query execution done
+2022-03-30 16:25:48,917 query: [ROLLBACK]
+2022-03-30 16:25:49,440 query execution done
+2022-03-30 16:25:49,441 connection initaited
+2022-03-30 16:25:49,441 query to check data
+2022-03-30 16:25:49,441 applying check for values in snowflake table and inserting data
+2022-03-30 16:25:49,442 query: [select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE =...]
+2022-03-30 16:25:50,322 query execution done
+2022-03-30 16:26:01,507 query: [ROLLBACK]
+2022-03-30 16:26:02,021 query execution done
+2022-03-30 16:26:04,681 closed
+2022-03-30 16:26:05,372 No async queries seem to be running, deleting session
+2022-03-30 16:26:05,910 appending file for mail
