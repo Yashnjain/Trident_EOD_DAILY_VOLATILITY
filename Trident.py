@@ -9,11 +9,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 import os
 from bu_config import get_config
 import bu_alerts
-import smtplib
-import email.mime.multipart
-import email.mime.text
-import email.mime.base
-import email.encoders as encoders
 import tabula
 import xlwings.constants as win32c
 import xlwings as xw
@@ -23,7 +18,6 @@ from snowflake.connector.pandas_tools import pd_writer
 import functools
 from datetime import date, datetime
 
-locations_list=[]
 
 today_date=date.today()
 # log progress --
@@ -74,8 +68,6 @@ def trade_date():
         test_area_date = ["67,47,85,160"]
         df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
         Trade_date=df_date[0].columns[1]
-        date=datetime.strptime(Trade_date, "%m/%d/%Y")
-        Trade_date = date.strftime('%Y-%d-%m')
         return Trade_date
     except Exception as e:
         logger.info(e)
@@ -93,69 +85,6 @@ def num_to_col_letters(num):
     except Exception as e:
         logger.info(e)
         raise e
-
-
-def send_mail(receiver_email: str, mail_subject: str, mail_body: str, attachment_locations: list = None, sender_email: str = None, sender_password: str=None) -> bool:
-    """The Function responsible to do all the mail sending logic.
-
-    Args:
-        sender_email (str): Email Id of the sender.
-        sender_password (str): Password of the sender.
-        receiver_email (str): Email Id of the receiver.
-        mail_subject (str): Subject line of the email.
-        mail_body (str): Message body of the Email.
-        attachment_locations (list, optional): Absolute path of the attachment. Defaults to None.
-
-    Returns:
-        bool: [description]
-    """
-    logging.info("INTO THE SEND MAIL FUNCTION")
-    done = False
-    try:
-        logging.info("GIVING CREDENTIALS FOR SENDING MAIL")
-        if not sender_email or sender_password:
-            sender_email = "biourjapowerdata@biourja.com"
-            sender_password = r"bY3mLSQ-\Q!9QmXJ"
-            # sender_email = r"virtual-out@biourja.com"
-            # sender_password = "t?%;`p39&Pv[L<6Y^cz$z2bn"
-        receivers = receiver_email.split(",")
-        msg = email.mime.multipart.MIMEMultipart()
-        msg['From'] = "biourjapowerdata@biourja.com"
-        msg['To'] = receiver_email
-        msg['Subject'] = mail_subject
-        body = mail_body
-        logging.info("Attaching mail body")
-        msg.attach(email.mime.text.MIMEText(body, 'html'))
-        logging.info("Attching files in the mail")
-        for files_locations in attachment_locations:
-            with open(files_locations, 'r+b') as attachment:
-                # instance of MIMEBase and named as p
-                p = email.mime.base.MIMEBase('application', 'octet-stream')
-                # To change the payload into encoded form
-                p.set_payload((attachment).read())
-                encoders.encode_base64(p)  # encode into base64
-                p.add_header('Content-Disposition',
-                             "attachment; filename= %s" % files_locations)
-                msg.attach(p)  # attach the instance 'p' to instance 'msg'
-
-        # s = smtplib.SMTP('smtp.gmail.com', 587) # creates SMTP session
-        s = smtplib.SMTP('us-smtp-outbound-1.mimecast.com',
-                         587)  # creates SMTP session
-        s.starttls()  # start TLS for security
-        s.login(sender_email, sender_password)  # Authentication
-        text = msg.as_string()  # Converts the Multipart msg into a string
-
-        s.sendmail(sender_email, receivers, text)  # sending the mail
-        s.quit()  # terminating the session
-        done = True
-        logging.info("Email sent successfully")
-        print("Email sent successfully.")
-    except Exception as e:
-        print(
-            f"Could not send the email, error occured, More Details : {e}")
-    finally:
-        return done
-
 
 def remove_existing_files(files_location):
     """_summary_
@@ -223,10 +152,10 @@ def login_and_download():
         time.sleep(5)
         logging.info("Setting search for manan ahuja")
         field=WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID,'From-PICKER-ID')))
-        field.click()
         retry=0
         while retry < 10:
             try:
+                field.click()
                 field.clear()
                 field.send_keys('manan.ahuja@biourja.com')
                 time.sleep(5)
@@ -386,23 +315,25 @@ def csv_to_dataframe():
             df1 = pd.DataFrame(data)
             df = df.append(df1, ignore_index=True)
         list2=["FUTURES_PRICE","ATM_STRADDLE","BREAK_EVEN"]
-        for values in list2:   
+        for values in list2: 
             df[values]  = [x[values].replace('$', '') for i, x in df.iterrows()]    
             df[values]  = [x[values].replace(' ', '') for i, x in df.iterrows()] 
+            df.loc[df[values] == '#DIV/0!',values] = pd.np.nan 
             df[values] = df[values].astype(float)
         df.fillna(str("nan"),inplace=True)    
         list3=list(df.columns[8:18])  
         for values in list3:
             # df[values] = df[values].astype(str)
             df[values]  = [x[values].replace('%', '') for i, x in df.iterrows()]    
-            df[values]  = [x[values].replace(' ', '') for i, x in df.iterrows()] 
+            df[values]  = [x[values].replace(' ', '') for i, x in df.iterrows()]
+            df.loc[df[values] == '#DIV/0!',values] = pd.np.nan  
             df[values] = df[values].astype(float)
             print(values)
-        df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].astype(object)    
+        df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].astype(float)    
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
         df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%Y-%d-%m').astype(str)
+        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%d-%m-%Y').astype(str)
         df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
         return df    
     except Exception as e:
@@ -421,10 +352,8 @@ def snowflake_dump(df,Trade_date):
             )
     logger.info("connection initaited")        
     try:
-        date=datetime.strptime(Trade_date, "%Y-%d-%m")
-        Trade_date = date.strftime('%Y-%m-%d')
         logger.info("query to check data")
-        query = f"select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE = '{Trade_date}'"           
+        query = f"select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE = '{df['TRADE_DATE'][0]}'"           
         logger.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
@@ -443,10 +372,10 @@ def snowflake_dump(df,Trade_date):
 
 def main():
     try:
-        # logger.info("into remove_existing_files funtion")
-        # remove_existing_files(files_location)
-        # logger.info("into login_and_download")
-        # login_and_download()
+        logger.info("into remove_existing_files funtion")
+        remove_existing_files(files_location)
+        logger.info("into login_and_download")
+        login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
@@ -455,11 +384,11 @@ def main():
         logger.info("into snowflake_dump")
         no_of_rows=snowflake_dump(df,Trade_date)  
         logger.info("appending file for mail")     
-        locations_list.append(logfile)
+        # locations_list.append(logfile)
         if no_of_rows>0:
-            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = logfile)
         else:
-            send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Already inserted previously and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = locations_list)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Already inserted previously and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_locations = logfile)
     except Exception as e:
         logging.exception(str(e))
         bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
@@ -484,3 +413,4 @@ if __name__ == "__main__":
     main()
     time_end=time.time()
     logging.info(f'It takes {time_start-time_end} seconds to run')
+    
