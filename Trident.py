@@ -22,13 +22,7 @@ from datetime import date, datetime
 today_date=date.today()
 # log progress --
 logfile = os.getcwd() +"\\logs\\"+'TRIDENT_EOD_DAILY_VOLATILITY_Logfile'+str(today_date)+'.txt'
-
-logging.basicConfig(filename=logfile, filemode='w',
-                    format='%(asctime)s %(message)s')
-logging.basicConfig(
-    level=logging.INFO, 
-    format='%(asctime)s [%(levelname)s] - %(message)s',
-    filename=logfile)
+logging.basicConfig(level=logging.INFO,filename=logfile,filemode='w',format='[line :- %(lineno)d] %(asctime)s [%(levelname)s] - %(message)s ')
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
