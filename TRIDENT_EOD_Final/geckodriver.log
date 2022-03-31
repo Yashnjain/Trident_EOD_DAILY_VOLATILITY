@@ -1,7 +1,0 @@
-1648553244705	geckodriver	INFO	Listening on 127.0.0.1:54672
-1648553247835	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "54673" "-no-remote" "-profile" "C:\\Users\\YASHN~1.JAI\\AppData\\Local\\Temp\\rust_mozprofileWzPc4Z"
-1648553248743	Marionette	INFO	Marionette enabled
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Yashn.jain\\AppData\\Local\\Temp\\rust_mozprofileWzPc4Z\\search.json.mozlz4", (void 0)))
-DevTools listening on ws://localhost:54673/devtools/browser/39762ce4-5d51-4872-8a6c-5e2006a70299
-1648553251232	Marionette	INFO	Listening on port 54679
-1648553251577	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
