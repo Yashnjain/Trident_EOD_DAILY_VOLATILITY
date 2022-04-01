@@ -330,8 +330,10 @@ def csv_to_dataframe():
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
         df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%d-%m-%Y').astype(str)
-        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
+        # df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%d-%m-%Y').astype(str)
+        # df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
+        df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         return df    
     except Exception as e:
         logger.info(e)
@@ -374,9 +376,9 @@ def main():
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
