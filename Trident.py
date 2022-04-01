@@ -49,6 +49,7 @@ table_name = credential_dict['TABLE_NAME']
 Database = credential_dict['DATABASE']
 SCHEMA = credential_dict['TABLE_SCHEMA']
 receiver_email = credential_dict['EMAIL_LIST']
+# receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
 download_path=os.getcwd() + "\\Download"
 output_location= os.getcwd()+"\\Generated_CSV"
 today_date=date.today()
