@@ -377,9 +377,9 @@ def main():
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logger.info("into remove_existing_files funtion")
-        # remove_existing_files(files_location)
-        # logger.info("into login_and_download")
-        # login_and_download()
+        remove_existing_files(files_location)
+        logger.info("into login_and_download")
+        login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
