@@ -344,9 +344,7 @@ def csv_to_dataframe():
 def snowflake_dump(df,Trade_date):
     logger.info("creating engine object and providing credentials")
     engine = bu_snowflake.get_engine(
-            username= "YASH",
-            password= "YashJainBiourja123",
-            role= "OWNER_POWERDB_DEV",
+            role= f"OWNER_{Database}",
             schema= SCHEMA,
             database= Database
             )
