@@ -364,7 +364,8 @@ def snowflake_dump(df,Trade_date):
     logger.info("connection initaited")        
     try:
         logger.info("query to check data")
-        query = f"select * from {Database}.{SCHEMA}.{table_name} where TRADE_DATE = '{df['TRADE_DATE'][0]}'"           
+        query = f"select * from {Database}.{SCHEMA}.{table_name} where TRADE_DATE = '{df['TRADE_DATE'][0]}'" 
+      
         logger.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
@@ -387,10 +388,10 @@ def main():
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
-        logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # logger.info("into remove_existing_files funtion")
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
