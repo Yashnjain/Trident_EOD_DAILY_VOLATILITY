@@ -133,7 +133,7 @@ def login_and_download():
                 time.sleep(5)
                 logging.info("setting search for only inbox")
                 WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,"//span[@id='searchScopeButtonId-option']"))).click()
-                time.sleep(5)
+                time.sleep(10)
                 WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,"//body/div[@data-portal-element='true']/div/div/div/div/div/div[@aria-label='Search Scope Selector.']/button[2]/span[1]"))).click()
                 break
             except Exception as e:
@@ -154,9 +154,11 @@ def login_and_download():
         while retry < 10:
             try:
                 field.click()
+                time.sleep(1)
                 field.clear()
+                time.sleep(1)
                 field.send_keys('manan.ahuja@biourja.com')
-                time.sleep(5)
+                time.sleep(10)
                 WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Manan Ahuja (manan.ahuja@biourja.com)']//span[@data-automationid='splitbuttonprimary']"))).click()
                 break
             except Exception as e:
@@ -178,7 +180,16 @@ def login_and_download():
         logging.info('Clicking download button')
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@name='Download']"))).click()
         time.sleep(20)
-        driver.close()
+        try:
+            driver.close()
+        except Exception as e: 
+            logging.info('driver not closed')
+            print("driver not closed") 
+            try:
+                driver.quit()
+            except Exception as e: 
+                logging.info('driver quit failed')
+                print("driver quit failed")
     except Exception as e:
         raise e 
 
