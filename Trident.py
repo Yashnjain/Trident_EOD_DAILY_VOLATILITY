@@ -362,7 +362,7 @@ def snowflake_dump(df,Trade_date):
     logger.info("connection initaited")        
     try:
         logger.info("query to check data")
-        query = f"select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE = '{df['TRADE_DATE'][0]}'"           
+        query = f"select * from POWERDB.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE = '{df['TRADE_DATE'][0]}'"           
         logger.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
