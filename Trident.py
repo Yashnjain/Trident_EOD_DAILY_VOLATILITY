@@ -47,13 +47,13 @@ username = credential_dict['USERNAME']
 password = credential_dict['PASSWORD']
 table_name = credential_dict['TABLE_NAME']
 Database = credential_dict['DATABASE']
+#Database = "POWERDB_DEV"
 SCHEMA = credential_dict['TABLE_SCHEMA']
 receiver_email = credential_dict['EMAIL_LIST']
-# receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
+#receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
 download_path=os.getcwd() + "\\Download"
 output_location= os.getcwd()+"\\Generated_CSV"
 today_date=date.today()
-download_path=os.getcwd() + "\\Download"
 job_id=np.random.randint(1000000,9999999)
 processname = credential_dict['PROJECT_NAME']
 process_owner = credential_dict['IT_OWNER']
@@ -342,16 +342,21 @@ def csv_to_dataframe():
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
         # df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         # df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        df["INSERTDATE"] = pd.to_datetime(df["TRADE_DATE"],format='%d-%m-%Y').astype(str)
-        df["UPDATEDATE"] = pd.to_datetime(df["TRADE_DATE"],format='%d-%m-%Y').astype(str)
-        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%d-%m-%Y').astype(str)
-        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
+        try:
+            df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
+            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
+            df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
+        except Exception as e:
+            logger.exception(f"conversion to datetime for Trade date column failed, {e}")
+        import pdb
+        pdb.set_trace()
+        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%Y').astype(str)
         # df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         # df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         return df    
     except Exception as e:
-        logger.info(e)
-        print(e)
+        logger.exception(f"Error occurred during csv to dataframe conversion {e}")
+        raise e
 
 
 def snowflake_dump(df,Trade_date):
