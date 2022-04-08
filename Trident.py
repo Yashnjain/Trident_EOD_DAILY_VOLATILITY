@@ -145,7 +145,7 @@ def login_and_download():
         logging.info('Clearing Search Bar')
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).clear()        # driver.find_element_by_xpath('/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input').clear()
         time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys("Manan Ahuja AND Daily Vol Report EOD")
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys('from:"manan.ahuja@biourja.com" AND Daily Vol Report EOD')
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Search']//span[@data-automationid='splitbuttonprimary']"))).click()
         logging.info('Clicking recent mail')
