@@ -143,31 +143,9 @@ def login_and_download():
                     raise e  
         time.sleep(5)
         logging.info('Clearing Search Bar')
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input'))).clear()
-        # driver.find_element_by_xpath('/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input').clear()
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).clear()        # driver.find_element_by_xpath('/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input').clear()
         time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@id='filtersButtonId']//span[@data-automationid='splitbuttonprimary']"))).click()
-        time.sleep(5)
-        logging.info("Setting search for manan ahuja")
-        field=WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID,'From-PICKER-ID')))
-        retry=0
-        while retry < 10:
-            try:
-                field.click()
-                time.sleep(1)
-                field.clear()
-                time.sleep(1)
-                field.send_keys('manan.ahuja@biourja.com')
-                time.sleep(10)
-                WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Manan Ahuja (manan.ahuja@biourja.com)']//span[@data-automationid='splitbuttonprimary']"))).click()
-                break
-            except Exception as e:
-                time.sleep(5)
-                retry+=1
-                if retry ==10:
-                    raise e       
-        time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input'))).send_keys("Daily Vol Report EOD")
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys("Manan Ahuja AND Daily Vol Report EOD")
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Search']//span[@data-automationid='splitbuttonprimary']"))).click()
         logging.info('Clicking recent mail')
