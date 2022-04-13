@@ -5,7 +5,7 @@ import time
 from datetime import date
 import logging
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.firefox import GeckoDriverManager
+# from webdriver_manager.firefox import GeckoDriverManager
 import os
 from bu_config import get_config
 import bu_alerts
@@ -18,6 +18,7 @@ from snowflake.connector.pandas_tools import pd_writer
 import functools
 from datetime import date, datetime
 import numpy as np
+from selenium.webdriver.firefox.options import Options
 
 today_date=date.today()
 # log progress --
@@ -31,7 +32,7 @@ path = os.getcwd() + "\\"+"Download"
 logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
 
 
-
+options = Options()
 profile = webdriver.FirefoxProfile()
 profile.set_preference('browser.download.folderList', 2)
 profile.set_preference('browser.download.dir', path)
@@ -39,9 +40,11 @@ profile.set_preference('browser.download.useDownloadDir', True)
 profile.set_preference('browser.download.viewableInternally.enabledTypes', "")
 profile.set_preference('browser.helperApps.neverAsk.saveToDisk','Portable Document Format (PDF), application/pdf')
 profile.set_preference('pdfjs.disabled', True)
+profile.update_preferences()
 logging.info('Adding firefox profile')
-driver=webdriver.Firefox(executable_path=GeckoDriverManager().install(),firefox_profile=profile)
-
+exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
+# driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
+driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=exe_path)
 credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
 username = credential_dict['USERNAME']
 password = credential_dict['PASSWORD']
