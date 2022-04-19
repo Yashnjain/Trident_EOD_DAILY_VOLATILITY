@@ -5,7 +5,6 @@ import time
 from datetime import date
 import logging
 from selenium.webdriver.support import expected_conditions as EC
-# from webdriver_manager.firefox import GeckoDriverManager
 import os
 from bu_config import get_config
 import bu_alerts
@@ -137,8 +136,12 @@ def login_and_download():
                 logging.info("setting search for only inbox")
                 WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,"//span[@id='searchScopeButtonId-option']"))).click()
                 time.sleep(10)
-                WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,"//body/div[@data-portal-element='true']/div/div/div/div/div/div[@aria-label='Search Scope Selector.']/button[2]/span[1]"))).click()
-                break
+                try:
+                    WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,"//span[@data-automationid='splitbuttonprimary']//span[contains(text(),'Inbox')]"))).click()
+                except:
+                    time.sleep(1)
+                    WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,"(//span[@class='ms-Button-flexContainer flexContainer-204'])[2]"))).click()                
+                break                   
             except Exception as e:
                 time.sleep(5)
                 retry+=1
