@@ -19,47 +19,6 @@ from datetime import date, datetime
 import numpy as np
 from selenium.webdriver.firefox.options import Options
 
-today_date=date.today()
-# log progress --
-logfile = os.getcwd() +"\\logs\\"+'TRIDENT_EOD_DAILY_VOLATILITY_Logfile'+str(today_date)+'.txt'
-logging.basicConfig(level=logging.INFO,filename=logfile,filemode='w',format='[line :- %(lineno)d] %(asctime)s [%(levelname)s] - %(message)s ')
-
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-logging.info('setting paTH TO DOWNLOAD')
-path = os.getcwd() + "\\"+"Download"
-logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
-
-
-options = Options()
-profile = webdriver.FirefoxProfile()
-profile.set_preference('browser.download.folderList', 2)
-profile.set_preference('browser.download.dir', path)
-profile.set_preference('browser.download.useDownloadDir', True)
-profile.set_preference('browser.download.viewableInternally.enabledTypes', "")
-profile.set_preference('browser.helperApps.neverAsk.saveToDisk','Portable Document Format (PDF), application/pdf')
-profile.set_preference('pdfjs.disabled', True)
-profile.update_preferences()
-logging.info('Adding firefox profile')
-exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
-# driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
-driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=exe_path)
-credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
-username = credential_dict['USERNAME']
-password = credential_dict['PASSWORD']
-table_name = credential_dict['TABLE_NAME']
-Database = credential_dict['DATABASE']
-#Database = "POWERDB_DEV"
-SCHEMA = credential_dict['TABLE_SCHEMA']
-receiver_email = credential_dict['EMAIL_LIST']
-#receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
-download_path=os.getcwd() + "\\Download"
-output_location= os.getcwd()+"\\Generated_CSV"
-today_date=date.today()
-job_id=np.random.randint(1000000,9999999)
-processname = credential_dict['PROJECT_NAME']
-process_owner = credential_dict['IT_OWNER']
-
 
 def trade_date():
     try:
@@ -400,6 +359,48 @@ def main():
 if __name__ == "__main__": 
     logging.info("Execution Started")
     time_start=time.time()
+    today_date=date.today()
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+    # log progress --
+    logfile = os.getcwd() +"\\logs\\"+'TRIDENT_'+str(today_date)+'.txt'
+    logging.basicConfig(level=logging.INFO,filename=logfile,filemode='w',format='[line :- %(lineno)d] %(asctime)s [%(levelname)s] - %(message)s ')
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logging.info('setting paTH TO DOWNLOAD')
+    path = os.getcwd() + "\\"+"Download"
+    logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
+
+
+    options = Options()
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference('browser.download.folderList', 2)
+    profile.set_preference('browser.download.dir', path)
+    profile.set_preference('browser.download.useDownloadDir', True)
+    profile.set_preference('browser.download.viewableInternally.enabledTypes', "")
+    profile.set_preference('browser.helperApps.neverAsk.saveToDisk','Portable Document Format (PDF), application/pdf')
+    profile.set_preference('pdfjs.disabled', True)
+    profile.update_preferences()
+    logging.info('Adding firefox profile')
+    exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
+    # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
+    driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=exe_path)
+    credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
+    username = credential_dict['USERNAME']
+    password = credential_dict['PASSWORD']
+    table_name = credential_dict['TABLE_NAME']
+    Database = credential_dict['DATABASE']
+    #Database = "POWERDB_DEV"
+    SCHEMA = credential_dict['TABLE_SCHEMA']
+    receiver_email = credential_dict['EMAIL_LIST']
+    #receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
+    download_path=os.getcwd() + "\\Download"
+    output_location= os.getcwd()+"\\Generated_CSV"
+    today_date=date.today()
+    job_id=np.random.randint(1000000,9999999)
+    processname = credential_dict['PROJECT_NAME']
+    process_owner = credential_dict['IT_OWNER']
     logging.info("Creating required directories")
     directories_created=["Download","Logs","Generated_CSV"]
     for directory in directories_created:
