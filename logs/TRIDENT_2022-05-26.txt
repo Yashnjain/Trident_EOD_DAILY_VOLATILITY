@@ -1,0 +1,112 @@
+[line :- 371] 2022-05-26 15:16:52,540 [INFO] - setting paTH TO DOWNLOAD 
+[line :- 373] 2022-05-26 15:16:52,540 [INFO] - SETTING PROFILE SETTINGS FOR FIREFOX 
+[line :- 385] 2022-05-26 15:16:52,600 [INFO] - Adding firefox profile 
+[line :- 268] 2022-05-26 15:16:52,608 [INFO] - Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0 
+[line :- 878] 2022-05-26 15:16:52,608 [INFO] - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity. 
+[line :- 896] 2022-05-26 15:16:52,608 [INFO] - Setting use_openssl_only mode to False 
+[line :- 704] 2022-05-26 15:16:55,853 [INFO] - query: [SELECT 1] 
+[line :- 728] 2022-05-26 15:16:56,152 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:16:56,152 [INFO] - query: [select * from POWERDB.PLOG.BU_CONFIG_PARAMS where PROJECT_NAME = 'TRIDENT_EOD_DA...] 
+[line :- 728] 2022-05-26 15:16:56,445 [INFO] - query execution done 
+[line :- 509] 2022-05-26 15:16:56,461 [INFO] - closed 
+[line :- 512] 2022-05-26 15:16:56,694 [INFO] - No async queries seem to be running, deleting session 
+[line :- 404] 2022-05-26 15:16:56,989 [INFO] - Creating required directories 
+[line :- 416] 2022-05-26 15:16:56,998 [INFO] - Into the main function 
+[line :- 268] 2022-05-26 15:16:57,060 [INFO] - Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0 
+[line :- 878] 2022-05-26 15:16:57,060 [INFO] - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity. 
+[line :- 704] 2022-05-26 15:16:58,434 [INFO] - query: [ROLLBACK] 
+[line :- 728] 2022-05-26 15:16:58,692 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:16:58,692 [INFO] - query: [SELECT 1] 
+[line :- 728] 2022-05-26 15:16:58,976 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:16:58,976 [INFO] - query: [ROLLBACK] 
+[line :- 728] 2022-05-26 15:17:00,131 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:00,169 [INFO] - query: [DESC TABLE /* sqlalchemy:_has_object */ process_log] 
+[line :- 728] 2022-05-26 15:17:00,464 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:00,480 [INFO] - query: [create temporary stage /* Python:snowflake.connector.pandas_tools.write_pandas()...] 
+[line :- 728] 2022-05-26 15:17:00,832 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:00,913 [INFO] - query: [PUT /* Python:snowflake.connector.pandas_tools.write_pandas() */ 'file://C:\\Use...] 
+[line :- 728] 2022-05-26 15:17:01,349 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:03,130 [INFO] - query: [COPY INTO PROCESS_LOG /* Python:snowflake.connector.pandas_tools.write_pandas() ...] 
+[line :- 728] 2022-05-26 15:17:05,444 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:05,444 [INFO] - query: [COMMIT] 
+[line :- 728] 2022-05-26 15:17:05,731 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:05,731 [INFO] - query: [ROLLBACK] 
+[line :- 728] 2022-05-26 15:17:06,004 [INFO] - query execution done 
+[line :- 332] 2022-05-26 15:17:06,004 [INFO] - into remove_existing_files funtion 
+[line :- 337] 2022-05-26 15:17:06,675 [INFO] - into read_pdf 
+[line :- 202] 2022-05-26 15:17:06,676 [INFO] - testing areas and column seperator values 
+[line :- 209] 2022-05-26 15:17:06,676 [INFO] - reading full page tables 
+[line :- 212] 2022-05-26 15:17:07,474 [INFO] - applying check for index and extracting tables 
+[line :- 214] 2022-05-26 15:17:07,474 [INFO] - picking up structure name from the table 
+[line :- 218] 2022-05-26 15:17:08,088 [INFO] - picking up table and converting it to csv 
+[line :- 222] 2022-05-26 15:17:08,763 [INFO] - trimming the table 
+[line :- 138] 2022-05-26 15:17:08,763 [INFO] - into trim_process_csv 
+[line :- 140] 2022-05-26 15:17:08,763 [INFO] - Opening operating workbook instance of excel 
+[line :- 151] 2022-05-26 15:17:09,942 [INFO] - Execution for trimming data Started 
+[line :- 154] 2022-05-26 15:17:09,985 [INFO] - Deleting columns 
+[line :- 157] 2022-05-26 15:17:10,023 [INFO] - Changing column names as per snowflake table 
+[line :- 165] 2022-05-26 15:17:10,378 [INFO] - Inserting extra columns as per snowflake table and inserting their values 
+[line :- 180] 2022-05-26 15:17:10,555 [INFO] - Interchanging last two columns 
+[line :- 183] 2022-05-26 15:17:10,737 [INFO] - deleting ATM VOL column 
+[line :- 185] 2022-05-26 15:17:10,775 [INFO] - Applying autofit and saving the file 
+[line :- 188] 2022-05-26 15:17:11,095 [INFO] - quitting app instance of excel 
+[line :- 225] 2022-05-26 15:17:11,100 [INFO] - picking up structure name from the table 
+[line :- 229] 2022-05-26 15:17:11,871 [INFO] - picking up table and converting it to csv 
+[line :- 233] 2022-05-26 15:17:12,638 [INFO] - trimming the table 
+[line :- 138] 2022-05-26 15:17:12,638 [INFO] - into trim_process_csv 
+[line :- 140] 2022-05-26 15:17:12,638 [INFO] - Opening operating workbook instance of excel 
+[line :- 151] 2022-05-26 15:17:13,797 [INFO] - Execution for trimming data Started 
+[line :- 154] 2022-05-26 15:17:13,821 [INFO] - Deleting columns 
+[line :- 157] 2022-05-26 15:17:13,849 [INFO] - Changing column names as per snowflake table 
+[line :- 165] 2022-05-26 15:17:14,225 [INFO] - Inserting extra columns as per snowflake table and inserting their values 
+[line :- 180] 2022-05-26 15:17:14,313 [INFO] - Interchanging last two columns 
+[line :- 183] 2022-05-26 15:17:14,832 [INFO] - deleting ATM VOL column 
+[line :- 185] 2022-05-26 15:17:14,858 [INFO] - Applying autofit and saving the file 
+[line :- 188] 2022-05-26 15:17:15,229 [INFO] - quitting app instance of excel 
+[line :- 212] 2022-05-26 15:17:15,237 [INFO] - applying check for index and extracting tables 
+[line :- 237] 2022-05-26 15:17:15,237 [INFO] - picking up structure name from the table 
+[line :- 241] 2022-05-26 15:17:15,951 [INFO] - picking up table and converting it to csv 
+[line :- 245] 2022-05-26 15:17:16,735 [INFO] - trimming the table 
+[line :- 138] 2022-05-26 15:17:16,735 [INFO] - into trim_process_csv 
+[line :- 140] 2022-05-26 15:17:16,735 [INFO] - Opening operating workbook instance of excel 
+[line :- 151] 2022-05-26 15:17:18,372 [INFO] - Execution for trimming data Started 
+[line :- 154] 2022-05-26 15:17:18,397 [INFO] - Deleting columns 
+[line :- 157] 2022-05-26 15:17:18,438 [INFO] - Changing column names as per snowflake table 
+[line :- 165] 2022-05-26 15:17:18,829 [INFO] - Inserting extra columns as per snowflake table and inserting their values 
+[line :- 180] 2022-05-26 15:17:19,012 [INFO] - Interchanging last two columns 
+[line :- 183] 2022-05-26 15:17:19,240 [INFO] - deleting ATM VOL column 
+[line :- 185] 2022-05-26 15:17:19,281 [INFO] - Applying autofit and saving the file 
+[line :- 188] 2022-05-26 15:17:19,718 [INFO] - quitting app instance of excel 
+[line :- 339] 2022-05-26 15:17:19,721 [INFO] - into csv_to_dataframe 
+[line :- 256] 2022-05-26 15:17:19,722 [INFO] - into csv_to_dataframe 
+[line :- 258] 2022-05-26 15:17:19,722 [INFO] - creating empty dataframe 
+[line :- 260] 2022-05-26 15:17:19,722 [INFO] - appending individual csv's data to dataframe and then appending those values to empty dataframe 
+[line :- 341] 2022-05-26 15:17:44,886 [INFO] - into snowflake_dump 
+[line :- 300] 2022-05-26 15:17:47,288 [INFO] - creating engine object and providing credentials 
+[line :- 268] 2022-05-26 15:17:49,397 [INFO] - Snowflake Connector for Python Version: 2.7.4, Python Version: 3.8.5, Platform: Windows-10-10.0.19041-SP0 
+[line :- 878] 2022-05-26 15:17:49,405 [INFO] - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity. 
+[line :- 704] 2022-05-26 15:17:50,789 [INFO] - query: [ROLLBACK] 
+[line :- 728] 2022-05-26 15:17:51,117 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:51,117 [INFO] - query: [SELECT 1] 
+[line :- 728] 2022-05-26 15:17:51,401 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:17:51,401 [INFO] - query: [ROLLBACK] 
+[line :- 728] 2022-05-26 15:17:51,718 [INFO] - query execution done 
+[line :- 306] 2022-05-26 15:17:53,387 [INFO] - connection initaited 
+[line :- 308] 2022-05-26 15:17:54,551 [INFO] - query to check data 
+[line :- 310] 2022-05-26 15:18:08,263 [INFO] - applying check for values in snowflake table and inserting data 
+[line :- 704] 2022-05-26 15:18:09,280 [INFO] - query: [select * from POWERDB_DEV.PMACRO.TRIDENT_EOD_DAILY_VOLATILITY where TRADE_DATE =...] 
+[line :- 728] 2022-05-26 15:18:09,745 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:12,094 [INFO] - query: [DESC TABLE /* sqlalchemy:_has_object */ "TRIDENT_EOD_DAILY_VOLATILITY"] 
+[line :- 728] 2022-05-26 15:18:12,395 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:12,420 [INFO] - query: [create temporary stage /* Python:snowflake.connector.pandas_tools.write_pandas()...] 
+[line :- 728] 2022-05-26 15:18:12,772 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:12,828 [INFO] - query: [PUT /* Python:snowflake.connector.pandas_tools.write_pandas() */ 'file://C:\\Use...] 
+[line :- 728] 2022-05-26 15:18:13,149 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:15,228 [INFO] - query: [COPY INTO TRIDENT_EOD_DAILY_VOLATILITY /* Python:snowflake.connector.pandas_tool...] 
+[line :- 728] 2022-05-26 15:18:16,536 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:16,552 [INFO] - query: [COMMIT] 
+[line :- 728] 2022-05-26 15:18:16,837 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:16,854 [INFO] - query: [SHOW /* sqlalchemy:get_table_names */ TABLES IN pmacro] 
+[line :- 728] 2022-05-26 15:18:17,175 [INFO] - query execution done 
+[line :- 704] 2022-05-26 15:18:18,733 [INFO] - query: [ROLLBACK] 
+[line :- 728] 2022-05-26 15:18:18,992 [INFO] - query execution done 

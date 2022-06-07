@@ -279,17 +279,17 @@ def csv_to_dataframe():
             print(values)
         df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].astype(float)    
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
-        # df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        # df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        try:
-            df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
-            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
-            df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
-        except Exception as e:
-            logger.exception(f"conversion to datetime for Trade date column failed, {e}")
-        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%Y').astype(str)
-        # df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        # df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        # try:
+        #     df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
+        #     df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
+        #     df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
+        # except Exception as e:
+        #     logger.exception(f"conversion to datetime for Trade date column failed, {e}")
+        # df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%Y').astype(str)
+        df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%d-%m"))
+        df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         return df    
     except Exception as e:
         logger.exception(f"Error occurred during csv to dataframe conversion {e}")
@@ -330,9 +330,9 @@ def main():
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
@@ -390,8 +390,8 @@ if __name__ == "__main__":
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    Database = credential_dict['DATABASE']
-    #Database = "POWERDB_DEV"
+    # Database = credential_dict['DATABASE']
+    Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
     receiver_email = credential_dict['EMAIL_LIST']
     #receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
