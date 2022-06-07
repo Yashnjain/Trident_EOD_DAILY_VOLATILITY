@@ -351,10 +351,10 @@ def main():
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
-        # logger.info("into remove_existing_files funtion")
-        # remove_existing_files(files_location)
-        # logger.info("into login_and_download")
-        # login_and_download()
+        logger.info("into remove_existing_files funtion")
+        remove_existing_files(files_location)
+        logger.info("into login_and_download")
+        login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         read_pdf(Trade_date)
@@ -413,11 +413,11 @@ if __name__ == "__main__":
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    # Database = credential_dict['DATABASE']
-    Database = "POWERDB_DEV"
+    Database = credential_dict['DATABASE']
+    # Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
-    # receiver_email = credential_dict['EMAIL_LIST']
-    receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
+    receiver_email = credential_dict['EMAIL_LIST']
+    # receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com,ayushi.joshi@biourja.com,rohit.mehra@biourja.com,indiapowerit@biourja.com"
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
     today_date=date.today()
