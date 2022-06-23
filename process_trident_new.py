@@ -379,8 +379,8 @@ if __name__ == "__main__":
     Database = credential_dict['DATABASE']
     # Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
-    receiver_email = credential_dict['EMAIL_LIST']
-    # receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
+    # receiver_email = credential_dict['EMAIL_LIST']
+    receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
     today_date=date.today()
