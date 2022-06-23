@@ -73,6 +73,8 @@ def login_and_download():
     try:
         logging.info('Accesing website')
         driver.get("https://outlook.office365.com/owa/biourja.com/")
+        time.sleep(1)
+        driver.maximize_window()
         time.sleep(10)
         logging.info('providing id and passwords')
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "i0116"))).send_keys(username)
