@@ -2,15 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
-from datetime import date
 import logging
 from selenium.webdriver.support import expected_conditions as EC
 import os
 from bu_config import get_config
 import bu_alerts
 import tabula
-import xlwings.constants as win32c
-import xlwings as xw
 import bu_snowflake
 import pandas as pd
 from snowflake.connector.pandas_tools import pd_writer
@@ -18,6 +15,7 @@ import functools
 from datetime import date, datetime
 import numpy as np
 from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 def trade_date():
@@ -44,6 +42,7 @@ def num_to_col_letters(num):
     except Exception as e:
         logger.info(e)
         raise e
+
 
 def remove_existing_files(files_location):
     """_summary_
@@ -106,12 +105,12 @@ def login_and_download():
         logging.info('Clearing Search Bar')
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).clear()        # driver.find_element_by_xpath('/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input').clear()
         time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys('from:"manan.ahuja@biourja.com" AND Daily Vol Report EOD')
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys('from:"manan.ahuja@biourja.com" AND Vol Report EOD')
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Search']//span[@data-automationid='splitbuttonprimary']"))).click()
         logging.info('Clicking recent mail')
         time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div/div[2]/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/div/div/div/div[6]/div/div"))).click()        
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/div/div/div/div[6]/div/div"))).click()        
         logging.info('Clicking more action button')
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@title='More actions']"))).click()
@@ -133,71 +132,37 @@ def login_and_download():
         raise e 
 
 
-def trim_process_csv(Trade_date,structure_name,file_name:str):
+def refactoring_dataframe(Trade_date,structure_name,dataframe):
     try:
-        logging.info("into trim_process_csv")
-        input_sheet=os.getcwd()+f'\\{file_name}' 
-        logger.info("Opening operating workbook instance of excel")
-        retry=0
-        while retry < 10:
-            try:
-                wb=xw.Book(input_sheet)
-                break
-            except Exception as e:
-                time.sleep(5)
-                retry+=1
-                if retry ==10:
-                    raise e
-        logging.info("Execution for trimming data Started")            
-        ws1=wb.sheets[0]
-        ws1.autofit()
-        logging.info("Deleting columns")
-        column_list = ws1.range("A1:Z1").value
-        while "Contract" not in column_list:
-            ws1.range("1:1").api.Delete()
-            column_list = ws1.range("A1:Z1").value
-        while ws1.api.Range("A1").Value!="Contract":
-            ws1.api.Range("A1").EntireColumn.Delete()
+        colList = list(dataframe.columns)
+        for col in range(len(colList)):
+            if len(list(dataframe.loc[dataframe[colList[col]]=='Contract'].index)):
+                contactCol = col
+                contractIndex = dataframe.loc[dataframe[colList[col]]=='Contract'].index[0]
 
-        logging.info("Changing column names as per snowflake table")
-        list1=["CONTRACT","OPTION_EXPIRY","TRADE_DAYS_TO_EXPIRY","FUTURES_PRICE","ATM_STRADDLE","BREAK_EVEN","ATM_IMP_VOL","ATM_IMP_VOL_1D_CHG","ATM_IMP_VOL_1WK_CHG","ATM_IMP_VOL_1MO_CHG","REAL_VOL_AVG_HIST","REAL_VOL_30_DAY","IMP_VOL_10D_PUT","IMP_VOL_25D_PUT","IMP_VOL_ATM","IMP_VOL_25D_CALL","IMP_VOL_10D_CALL"]
-        column_list = ws1.range("A1").expand('right').value
-        for index2,values in enumerate(column_list):
-            values_column_no=column_list.index(values)+1
-            values_letter_column = num_to_col_letters(column_list.index(values)+1)
-            ws1.range(f"{values_letter_column}1").value = list1[index2]                  
-        # print("Pause")
-        logging.info("Inserting extra columns as per snowflake table and inserting their values")
-        last_row = ws1.range(f'A'+ str(ws1.cells.last_cell.row)).end('up').row
-        ws1.api.Range("A1").EntireColumn.Insert()
-        ws1.range("A1").value="STRUCTURE_NAME"
-        ws1.range(f"A2:A{last_row}").value=structure_name
-        ws1.api.Range("A1").EntireColumn.Insert()
-        ws1.range("A1").value="TRADE_DATE"
-        ws1.range(f"A2:A{last_row}").value=Trade_date
-        column_list = ws1.range("A1").expand('right').value
-        insert_letter=num_to_col_letters(len(column_list)+1)
-        ws1.range(f"{insert_letter}1").value="INSERTDATE"
-        ws1.range(f"{insert_letter}2:{insert_letter}{last_row}").value=today_date
-        insert_letter=num_to_col_letters(len(column_list)+2)
-        ws1.range(f"{insert_letter}1").value="UPDATEDATE"
-        ws1.range(f"{insert_letter}2:{insert_letter}{last_row}").value=today_date
-        logging.info("Interchanging last two columns")
-        ws1.api.Range("S:S").Cut()
-        ws1.api.Range("R:R").Insert(win32c.Direction.xlToRight)
-        logging.info("deleting ATM VOL column")
-        ws1.api.Range("I:I").EntireColumn.Delete()
-        logging.info("Applying autofit and saving the file")
-        ws1.autofit()
-        wb.save(f"{output_location}\\{file_name}")
-        logging.info("quitting app instance of excel")
-        try:
-            wb.app.quit()
-        except Exception as e:
-            wb.app.quit()          
+        for i in range(0,contractIndex):
+            dataframe.drop(i,inplace=True)
+        for i in range(0,contactCol):
+            dataframe.drop(dataframe.columns[[i]], axis=1, inplace=True)
+        dataframe.dropna(axis=0,how='all',inplace=True)
+        dataframe.dropna(axis=1,how='all',inplace=True)      
+        dataframe.drop(1,inplace=True)
+        dataframe.columns = ["CONTRACT","OPTION_EXPIRY","TRADE_DAYS_TO_EXPIRY","FUTURES_PRICE","ATM_STRADDLE","BREAK_EVEN",
+                        "ATM_IMP_VOL","ATM_IMP_VOL_1D_CHG","ATM_IMP_VOL_1WK_CHG","ATM_IMP_VOL_1MO_CHG","REAL_VOL_AVG_HIST","REAL_VOL_30_DAY",
+                                    "IMP_VOL_10D_PUT","IMP_VOL_25D_PUT","IMP_VOL_ATM","IMP_VOL_25D_CALL","IMP_VOL_10D_CALL"]
+
+        columns_titles = ["CONTRACT","OPTION_EXPIRY","TRADE_DAYS_TO_EXPIRY","FUTURES_PRICE","ATM_STRADDLE",
+                            "BREAK_EVEN","ATM_IMP_VOL","ATM_IMP_VOL_1D_CHG","ATM_IMP_VOL_1WK_CHG","ATM_IMP_VOL_1MO_CHG","REAL_VOL_AVG_HIST", "REAL_VOL_30_DAY",
+                                "IMP_VOL_10D_PUT","IMP_VOL_25D_PUT","IMP_VOL_ATM","IMP_VOL_10D_CALL","IMP_VOL_25D_CALL"]
+        dataframe=dataframe.reindex(columns=columns_titles)
+        dataframe.insert(0,'STRUCTURE_NAME',structure_name) 
+        dataframe.insert(0,'TRADE_DATE',Trade_date)
+        dataframe['INSERTDATE'] = str(datetime.now())
+        dataframe['UPDATEDATE'] = str(datetime.now())
+        return dataframe
     except Exception as e:
-        logger.info(e)
-        pass 
+        logger.exception(f"error occurred : {e}")
+        raise(e)  
 
 
 def read_pdf(Trade_date):
@@ -205,28 +170,24 @@ def read_pdf(Trade_date):
         file_name= os.listdir(os.getcwd() + "\\Download")
         file2=file_name[0] 
         logger.info("testing areas and column seperator values")
-        #
         #new coordinates updated(1st table)
         column_values0=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
         test_area0 = ["273.488,43.911,515.993,547.281"]
         #old coordinates
         # column_values0=["82","114","151","181","213","242","273","296","327","357","391","420","450","481","509","539"]
         # test_area0 = ["293.378,50,526.173,569.543"]
-        #
         #new coordinates updated
         test_area2=["506.813,43.911,571.838,545.751"]
         column_values2=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
         #old coordinates
         # test_area2=["530.0","50.0","584","568"]
-        # column_values2=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]
-        #        
+        # column_values2=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]    
         #new coordinates updated
         column_values1=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
         test_area1=["257.423,-0.459,497.633,603.891"]
         #old coordinates
         # column_values1=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]
         # test_area1=["282.996","50.0","508","568"]
-        #
 
         logger.info("reading full page tables")
         df = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="all",silent=True,guess=False)
@@ -238,52 +199,48 @@ def read_pdf(Trade_date):
                 df_structure = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_structure,silent=True,guess=False)
                 structure_name=df_structure[0].columns[0]
                 logger.info("picking up table and converting it to csv")
-                df0=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area0,columns=column_values0,silent=True,guess=False)    
-                file_name='file.csv'
-                df0[0].to_csv(file_name)
+                df0=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area0,columns=column_values0,silent=True,guess=False)[0]  
                 logger.info("trimming the table")
-                trim_process_csv(Trade_date,structure_name,file_name)
+                df0=refactoring_dataframe(Trade_date,structure_name,df0)
                 #for second table
                 logger.info("picking up structure name from the table")
                 test_area_structure2 = ["506.813,0.306,526.703,611.541"] #changed
                 df_structure2 = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_structure2,silent=True,guess=False)
                 structure_name=df_structure2[0].columns[0]
                 logger.info("picking up table and converting it to csv")
-                df1=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area2,columns=column_values2,silent=True,guess=False)    
-                file_name='file1.csv'
-                df1[0].to_csv(file_name)
+                df1=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area2,columns=column_values2,silent=True,guess=False)[0]    
                 logger.info("trimming the table")
-                # df1[0].drop(0,inplace=True)
-                trim_process_csv(Trade_date,structure_name,file_name)
+                df1=refactoring_dataframe(Trade_date,structure_name,df1)
             if index == 1:
                 logger.info("picking up structure name from the table")
                 test_area_structure3 = ["250.538,1.071,278.843,611.541"]#changed
                 df_structure3 = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index+1],area=test_area_structure3,silent=True,guess=False)
                 structure_name=df_structure3[0].columns[0]
                 logger.info("picking up table and converting it to csv")
-                df2=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area1,columns=column_values1,silent=True,guess=False)    
-                file_name='file2.csv'
-                df2[0].to_csv(file_name)
+                df2=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area1,columns=column_values1,silent=True,guess=False)[0]    
                 logger.info("trimming the table")
-                trim_process_csv(Trade_date,structure_name,file_name)
+                df2=refactoring_dataframe(Trade_date,structure_name,df2)
                 break
-        print("Done")
+        return df0,df1,df2
     except Exception as e:
         logger.info(e)
         print(e) 
 
 
-def csv_to_dataframe():
+def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
     try:
         logger.info("into csv_to_dataframe")
-        csvsToUpload = os.listdir(f"{output_location}")
-        logger.info("creating empty dataframe")
+        # csvsToUpload = os.listdir(f"{output_location}")
+        # logger.info("creating empty dataframe")
         df = pd.DataFrame()
-        logger.info("appending individual csv's data to dataframe and then appending those values to empty dataframe")
-        for files in csvsToUpload:
-            data = pd.read_csv (f"{output_location}\\{files}")   
-            df1 = pd.DataFrame(data)
-            df = df.append(df1, ignore_index=True)
+        logger.info("appending individual dataframes to single empty dataframe")
+        # for files in csvsToUpload:
+        #     data = pd.read_csv (f"{output_location}\\{files}")   
+        #     df1 = pd.DataFrame(data)
+        df = df.append([dataframe1,dataframe2,dataframe3], ignore_index=True)
+        logger.info("deleting non required column")
+        del df['ATM_IMP_VOL']
+        logger.info("applying various operations on dataframe")
         list2=["FUTURES_PRICE","ATM_STRADDLE","BREAK_EVEN"]
         for values in list2: 
             df[values]  = [x[values].replace('$', '') for i, x in df.iterrows()]    
@@ -297,28 +254,31 @@ def csv_to_dataframe():
             df[values]  = [x[values].replace('%', '') for i, x in df.iterrows()]    
             df[values]  = [x[values].replace(' ', '') for i, x in df.iterrows()]
             df.loc[df[values] == '#DIV/0!',values] = pd.np.nan  
+            df.loc[df[values] == '#REF!',values] = pd.np.nan
             df[values] = df[values].astype(float)
             print(values)
+
         df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].astype(float)    
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
-        df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        # try:
-        #     df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
-        #     df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
-        #     df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
-        # except Exception as e:
-        #     logger.exception(f"conversion to datetime for Trade date column failed, {e}")
-        # df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%Y').astype(str)
-        df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%d-%m"))
-        df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        # df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        # df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        try:
+            # df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
+            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
+            # df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
+        except Exception as e:
+            logger.exception(f"conversion to datetime for Trade date column failed, {e}")
+        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
+        # df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        # df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
+        
         return df    
     except Exception as e:
         logger.exception(f"Error occurred during csv to dataframe conversion {e}")
         raise e
 
 
-def snowflake_dump(df,Trade_date):
+def snowflake_dump(df):
     logger.info("creating engine object and providing credentials")
     engine = bu_snowflake.get_engine(
             role= f"OWNER_{Database}",
@@ -357,11 +317,11 @@ def main():
         login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
-        read_pdf(Trade_date)
+        df0,df1,df2=read_pdf(Trade_date)
         logger.info("into csv_to_dataframe")
-        df=csv_to_dataframe()
+        df=csv_to_dataframe(df0,df1,df2)
         logger.info("into snowflake_dump")
-        no_of_rows=snowflake_dump(df,Trade_date)  
+        no_of_rows=snowflake_dump(df)  
         logger.info("appending file for mail")
         bu_alerts.bulog(process_name=processname,database=Database,status='Completed',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)     
@@ -408,16 +368,16 @@ if __name__ == "__main__":
     exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
     # exe_path = r'C:\Users\Yashn.jain\OneDrive - BioUrja Trading LLC\Power\trident_eod_daily_volatility'
     # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
-    driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=exe_path)
+    driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
     credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    # Database = credential_dict['DATABASE']
-    Database = "POWERDB_DEV"
+    Database = credential_dict['DATABASE']
+    # Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
-    # receiver_email = credential_dict['EMAIL_LIST']
-    receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
+    receiver_email = credential_dict['EMAIL_LIST']
+    # receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com"
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
     today_date=date.today()
@@ -440,3 +400,4 @@ if __name__ == "__main__":
     main()
     time_end=time.time()
     logging.info(f'It takes {time_start-time_end} seconds to run')
+
