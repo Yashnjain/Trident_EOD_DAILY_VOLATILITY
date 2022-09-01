@@ -91,6 +91,13 @@ def login_and_download():
         retry=0
         while retry < 10:
             try:
+                # WebDriverWait(driver, 90, poll_frequency=1).until(EC.invisibility_of_element_located((By.CLASS_NAME, "ms-Overlay ms-Overlay--dark root-256")))
+                logging.info('closing unwanted overlay')
+                try:
+                    WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".ms-Dialog-button"))).click()
+                except:
+                    pass
+                time.sleep(5)
                 logging.info('Accessing search box')
                 WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "searchBoxId-Mail"))).click()
                 time.sleep(5)
@@ -314,10 +321,10 @@ def main():
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
-        logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
+        # logger.info("into remove_existing_files funtion")
+        # remove_existing_files(files_location)
+        # logger.info("into login_and_download")
+        # login_and_download()
         Trade_date=trade_date()
         logger.info("into read_pdf")
         df0,df1,df2=read_pdf(Trade_date)
@@ -368,19 +375,29 @@ if __name__ == "__main__":
     profile.set_preference('pdfjs.disabled', True)
     profile.update_preferences()
     logging.info('Adding firefox profile')
-    exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
+    # exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
     # exe_path = r'C:\Users\Yashn.jain\OneDrive - BioUrja Trading LLC\Power\trident_eod_daily_volatility'
     # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
-    driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
+
+    # driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=exe_path)
+    driver=webdriver.Firefox(executable_path=GeckoDriverManager().install(),firefox_profile=profile,options=options)
+
+    # driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
+
     credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    Database = credential_dict['DATABASE']
-    # Database = "POWERDB_DEV"
+    # Database = credential_dict['DATABASE']
+    Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
+
+    # receiver_email = credential_dict['EMAIL_LIST']
+    # receiver_email = "yashn.jain@biourja.com"
+
     receiver_email = credential_dict['EMAIL_LIST']
     # receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
+
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
     today_date=date.today()
@@ -403,4 +420,5 @@ if __name__ == "__main__":
     main()
     time_end=time.time()
     logging.info(f'It takes {time_start-time_end} seconds to run')
+
 
