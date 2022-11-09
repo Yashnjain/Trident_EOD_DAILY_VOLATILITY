@@ -388,8 +388,8 @@ if __name__ == "__main__":
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    # Database = credential_dict['DATABASE']
-    Database = "POWERDB_DEV"
+    Database = credential_dict['DATABASE']
+    # Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
 
     # receiver_email = credential_dict['EMAIL_LIST']
