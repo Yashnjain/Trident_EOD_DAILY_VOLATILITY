@@ -18,6 +18,25 @@ from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
 
+def convert_float(s):
+    '''
+        This function converts data frame series values from number string to float. In case if error we return np.nan for strings other
+
+        Params:
+        -------
+        s : str
+            The value of each row of a dataframe column
+
+        Returns:
+        --------
+        float(s): float
+            The float value of the number string
+    '''
+    try:
+        return float(s)
+    except ValueError as e:
+        return np.nan 
+
 def trade_date():
     try:
         file_name= os.listdir(os.getcwd() + "\\Download")
@@ -71,6 +90,20 @@ def remove_existing_files(files_location):
 def login_and_download():  
     '''This function downloads log in to the website'''
     try:
+        options = Options()
+        profile = webdriver.FirefoxProfile()
+        profile.set_preference('browser.download.folderList', 2)
+        profile.set_preference('browser.download.dir', path)
+        profile.set_preference('browser.download.useDownloadDir', True)
+        profile.set_preference('browser.download.viewableInternally.enabledTypes', "")
+        profile.set_preference('browser.helperApps.neverAsk.saveToDisk','Portable Document Format (PDF), application/pdf')
+        profile.set_preference('pdfjs.disabled', True)
+        profile.update_preferences()
+        logging.info('Adding firefox profile')
+        exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
+        # exe_path = r'C:\Users\Yashn.jain\OneDrive - BioUrja Trading LLC\Power\trident_eod_daily_volatility'
+        # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
+        driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
         logging.info('Accesing website')
         driver.get("https://outlook.office365.com/owa/biourja.com/")
         time.sleep(1)
@@ -229,7 +262,6 @@ def read_pdf(Trade_date):
         logger.info(e)
         print(e) 
 
-
 def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
     try:
         logger.info("into csv_to_dataframe")
@@ -249,7 +281,8 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
             df[values]  = [x[values].replace('$', '') for i, x in df.iterrows()]    
             df[values]  = [x[values].replace(' ', '') for i, x in df.iterrows()] 
             df.loc[df[values] == '#DIV/0!',values] = pd.np.nan 
-            df[values] = df[values].astype(float)
+            # df[values] = df[values].astype(float)
+            df[values] = df[values].apply(convert_float)
         df.fillna(str("nan"),inplace=True)    
         list3=list(df.columns[8:18])  
         for values in list3:
@@ -258,7 +291,8 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
             df[values]  = [x[values].replace(' ', '') for i, x in df.iterrows()]
             df.loc[df[values] == '#DIV/0!',values] = pd.np.nan  
             df.loc[df[values] == '#REF!',values] = pd.np.nan
-            df[values] = df[values].astype(float)
+            # df[values] = df[values].astype(float)
+            df[values] = df[values].apply(convert_float)
             print(values)
 
         df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].astype(float)    
@@ -315,7 +349,7 @@ def main():
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logger.info("into remove_existing_files funtion")
-        remove_existing_files(files_location)
+        # remove_existing_files(files_location)
         logger.info("into login_and_download")
         login_and_download()
         Trade_date=trade_date()
@@ -357,30 +391,15 @@ if __name__ == "__main__":
     path = os.getcwd() + "\\"+"Download"
     logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
 
-
-    options = Options()
-    profile = webdriver.FirefoxProfile()
-    profile.set_preference('browser.download.folderList', 2)
-    profile.set_preference('browser.download.dir', path)
-    profile.set_preference('browser.download.useDownloadDir', True)
-    profile.set_preference('browser.download.viewableInternally.enabledTypes', "")
-    profile.set_preference('browser.helperApps.neverAsk.saveToDisk','Portable Document Format (PDF), application/pdf')
-    profile.set_preference('pdfjs.disabled', True)
-    profile.update_preferences()
-    logging.info('Adding firefox profile')
-    exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
-    # exe_path = r'C:\Users\Yashn.jain\OneDrive - BioUrja Trading LLC\Power\trident_eod_daily_volatility'
-    # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
-    driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
     credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    Database = credential_dict['DATABASE']
-    # Database = "POWERDB_DEV"
+    # Database = credential_dict['DATABASE']
+    Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
-    receiver_email = credential_dict['EMAIL_LIST']
-    # receiver_email = "yashn.jain@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
+    # receiver_email = credential_dict['EMAIL_LIST']
+    receiver_email = "megha.chouhan@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
     today_date=date.today()
