@@ -263,6 +263,8 @@ def read_pdf(Trade_date):
         print(e) 
 
 def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
+    ''' convert into csv file to dataframe'''
+    
     try:
         logger.info("into csv_to_dataframe")
         # csvsToUpload = os.listdir(f"{output_location}")
@@ -316,6 +318,8 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
 
 
 def snowflake_dump(df):
+    '''uploaded  the dataframe   in snowflake '''
+
     logger.info("creating engine object and providing credentials")
     engine = bu_snowflake.get_engine(
             role= f"OWNER_{Database}",
@@ -395,11 +399,11 @@ if __name__ == "__main__":
     username = credential_dict['USERNAME']
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
-    # Database = credential_dict['DATABASE']
-    Database = "POWERDB_DEV"
+    Database = credential_dict['DATABASE']
+    # Database = "POWERDB_DEV"
     SCHEMA = credential_dict['TABLE_SCHEMA']
-    # receiver_email = credential_dict['EMAIL_LIST']
-    receiver_email = "megha.chouhan@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
+    receiver_email = credential_dict['EMAIL_LIST']
+    # receiver_email = "megha.chouhan@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
     today_date=date.today()
