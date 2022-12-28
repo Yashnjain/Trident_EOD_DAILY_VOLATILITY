@@ -100,7 +100,7 @@ def login_and_download():
         profile.set_preference('pdfjs.disabled', True)
         profile.update_preferences()
         logging.info('Adding firefox profile')
-        exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility\geckodriver.exe'
+        exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility-1\geckodriver.exe'
         # exe_path = r'C:\Users\Yashn.jain\OneDrive - BioUrja Trading LLC\Power\trident_eod_daily_volatility'
         # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
         driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())

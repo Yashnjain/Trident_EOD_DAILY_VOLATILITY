@@ -346,7 +346,7 @@ if __name__ == '__main__':
         username = credential_dict['USERNAME']
         password = credential_dict['PASSWORD']
         subject = credential_dict['API_KEY']
-        databasename = 'POWERDB_DEV'  #credential_dict['DATABASE']
+        databasename = credential_dict['DATABASE']
         schemaname = credential_dict['TABLE_SCHEMA']
         process_owner =  credential_dict['IT_OWNER']
         receiver_email = 'indiapowerit@biourja.com'#'enoch.benjamin@biourja.com' #credential_dict['EMAIL_LIST']
