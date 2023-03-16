@@ -37,6 +37,25 @@ def convert_float(s):
     except ValueError as e:
         return np.nan 
 
+def convert_string(k):
+    '''
+        This function converts data frame series values from number string to float. In case if error we return np.nan for strings other
+
+        Params:
+        -------
+        s : str
+            The value of each row of a dataframe column
+
+        Returns:
+        --------
+        float(s): float
+            The float value of the number string
+    '''
+    try:
+        return pd.to_datetime(k,format='%m/%d/%y').astype(str)
+    except ValueError as e:
+        return ''
+
 def trade_date():
     try:
         file_name= os.listdir(os.getcwd() + "\\Download")
@@ -268,7 +287,11 @@ def read_pdf(Trade_date):
     except Exception as e:
         logger.info(e)
         print(e) 
-
+def convert_datetime(dt):
+    try:
+        return str(datetime.strptime(dt,'%m/%d/%y'))
+    except ValueError:
+        return np.nan
 def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
     ''' convert into csv file to dataframe'''
     
@@ -303,8 +326,9 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
             # df[values] = df[values].astype(float)
             df[values] = df[values].apply(convert_float)
             print(values)
-
-        df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].astype(float)    
+        # df['TRADE_DAYS_TO_EXPIRY'] = [float(x.replace('#N/A','0.0')) if x=='#N/A' else x for x in df['TRADE_DAYS_TO_EXPIRY'] ]
+        # df['TRADE_DAYS_TO_EXPIRY'] = [float(x) if x=='0.0' else x for x in df['TRADE_DAYS_TO_EXPIRY'] ]
+        df['TRADE_DAYS_TO_EXPIRY']=df['TRADE_DAYS_TO_EXPIRY'].apply(convert_float)    
         # df['ISO_PNODE']  = [x['ISO_PNODE'].replace('*', '') for i, x in df.iterrows()]    
         # df["INSERTDATE"] = pd.to_datetime(pd.Series(df["INSERTDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         # df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
@@ -314,10 +338,16 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
             # df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
         except Exception as e:
             logger.exception(f"conversion to datetime for Trade date column failed, {e}")
-        df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
+        #df["OPTION_EXPIRY"]=convert_string(df["OPTION_EXPIRY"])
+        try:
+            df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
+        except ValueError as e:
+            df["OPTION_EXPIRY"]=   [str(x.replace('#N/A','')) if x=='#N/A' else x for x in df['OPTION_EXPIRY'] ]  
+            df["OPTION_EXPIRY"]= df["OPTION_EXPIRY"].apply(convert_datetime)
         # df["TRADE_DATE"] = pd.to_datetime(pd.Series(df["TRADE_DATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         # df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
-        
+        # df['TRADE_DAYS_TO_EXPIRY'] = [float(x.replace('#N/A','0.0')) if x=='#N/A' else x for x in df['TRADE_DAYS_TO_EXPIRY'] ]
+        # df['TRADE_DAYS_TO_EXPIRY'] = [float(x) if x=='0.0' else x for x in df['TRADE_DAYS_TO_EXPIRY'] ]
         return df    
     except Exception as e:
         logger.exception(f"Error occurred during csv to dataframe conversion {e}")
@@ -360,7 +390,7 @@ def main():
         bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logger.info("into remove_existing_files funtion")
-        # remove_existing_files(files_location)
+        #remove_existing_files(files_location)
         logger.info("into login_and_download")
         login_and_download()
         Trade_date=trade_date()
@@ -407,13 +437,13 @@ if __name__ == "__main__":
     password = credential_dict['PASSWORD']
     table_name = credential_dict['TABLE_NAME']
     Database = credential_dict['DATABASE']
-    # Database = "POWERDB_DEV"
+    #Database = "POWERDB"
     SCHEMA = credential_dict['TABLE_SCHEMA']
 
-    # receiver_email = credential_dict['EMAIL_LIST']
+    #receiver_email = 'enoch.benjamin@biourja.com'
     # receiver_email = "yashn.jain@biourja.com"
 
-    receiver_email = credential_dict['EMAIL_LIST']
+    receiver_email = credential_dict['EMAIL_LIST']#'enoch.benjamin@biourja.com' 
     # receiver_email = "megha.chouhan@biourja.com, mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
     download_path=os.getcwd() + "\\Download"
     output_location= os.getcwd()+"\\Generated_CSV"
