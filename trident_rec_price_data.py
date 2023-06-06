@@ -63,7 +63,7 @@ def login_and_download(username, password, url, subject, download_path, logger):
         driver.get(url)
         driver.maximize_window()
         logger.info('providing id and passwords')
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "i0116"))).send_keys(username)
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "i0116"))).send_keys(username)   
         time.sleep(1)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "idSIButton9"))).click()
         time.sleep(1)
@@ -78,12 +78,13 @@ def login_and_download(username, password, url, subject, download_path, logger):
         while retry < 10:
             try:
                 logger.info('Accessing search box')
-                WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "searchBoxId-Mail"))).click()
-                time.sleep(5)
+                WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="topSearchInput"]'))).click()
+                #WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.ID, "searchBoxId-Mail"))).click()
+                time.sleep(10)
                 logger.info("setting search for only inbox")
                 WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable(
                     (By.XPATH,"//span[@id='searchScopeButtonId-option']"))).click()
-                time.sleep(10)
+                time.sleep(15)
                 try:
                     WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable(
                         (By.XPATH,"//span[@data-automationid='splitbuttonprimary']//span[contains(text(),'Inbox')]"))).click()
@@ -101,16 +102,15 @@ def login_and_download(username, password, url, subject, download_path, logger):
         logger.info('Clearing Search Bar')
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).clear()
         time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable(
-            (By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys(subject)
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys(subject)
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable(
             (By.XPATH, "//button[@aria-label='Search']//span[@data-automationid='splitbuttonprimary']"))).click()
         logger.info('Clicking recent mail')
-        time.sleep(5)
+        time.sleep(10)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable(
             (By.XPATH, """/html/body/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/
-            div/div/div/div[6]/div/div/div[1]/div[2]"""))).click()        
+            div/div/div/div[6]/div/div/div[1]/div[2]"""))).click() 
         logger.info('Clicking more action button')
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@title='More actions']"))).click()
@@ -297,6 +297,7 @@ def upload_in_sf(df, trade_date):
         check_rows = conn.execute(check_query).fetchall()
         logger.info("Check if the data is already present")
         sf_max_date =max_date[0][0].strftime("%Y-%m-%d")
+        today_date= date.today().strftime("%Y-%m-%d")
         if trade_date > sf_max_date:
             if len(check_rows) == 0:
                 logger.info(f"NO data of {trade_date} is present in {tablename} table.Dumping got started into table")
@@ -316,15 +317,20 @@ def upload_in_sf(df, trade_date):
 
             logger.info(f"Dataframe Inserted into the table {tablename} for TRADEDATE {trade_date} and total rows are {len(df)}")
             total_rows += len(df)
-        elif trade_date <= sf_max_date:
+        elif trade_date==sf_max_date!=today_date:
             logger.info(f"New pdf file still not received.Last dumped data is of {sf_max_date} file")
             print("New pdf file not received")    
+            return '0'
+        elif trade_date==sf_max_date==today_date:
+            logger.info(f" latest file of {trade_date}, Already updated")
+            print("Recent file already updated")  
+            return 'updated'        
     except Exception as e:
         logger.exception("Exception while inserting data into snowflake")
         logger.exception(e)
         raise e
     finally:
-        try:        
+        try:
             conn.close()      
             engine.dispose()
             logger.info("Engine object disposed successfully and connection object closed")
@@ -332,6 +338,7 @@ def upload_in_sf(df, trade_date):
         except Exception as e:
             logger.exception(e)
             raise e
+
 
 if __name__ == '__main__':
     try:
@@ -346,10 +353,11 @@ if __name__ == '__main__':
         username = credential_dict['USERNAME']
         password = credential_dict['PASSWORD']
         subject = credential_dict['API_KEY']
-        databasename = credential_dict['DATABASE']
-        schemaname = credential_dict['TABLE_SCHEMA']
+        databasename ='POWERDB_DEV' #credential_dict['DATABASE']
+        schemaname = 'PTEST'
+        #schemaname = credential_dict['TABLE_SCHEMA']
         process_owner =  credential_dict['IT_OWNER']
-        receiver_email = 'indiapowerit@biourja.com'#'enoch.benjamin@biourja.com' #credential_dict['EMAIL_LIST']
+        receiver_email = 'enoch.benjamin@biourja.com'  #'indiapowerit@biourja.com' #credential_dict['EMAIL_LIST']
         exe_path = os.getcwd() + '\\geckodriver.exe'
         download_path = os.getcwd() + "\\"+"download"
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
@@ -366,7 +374,7 @@ if __name__ == '__main__':
             row_count=0, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         
         logger.info("Calling remove existing file function")
-        remove_existing_files(download_path)
+        #remove_existing_files(download_path)
         logger.info("Remove existing file completed")
         logger.info("Calling login download function")
         login_and_download(username, password, url, subject, download_path, logger)
@@ -374,28 +382,28 @@ if __name__ == '__main__':
         logger.info("Calling extract df function")
         rows = extract_and_upload_pdf(download_path)
         logger.info("Extract df function completed")
-        
-        bu_alerts.bulog(process_name=processname,database=databasename,status='Completed',table_name=tablename,
-            row_count=rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
-
-        if rows > 0:
-            subject = f"JOB SUCCESS - {tablename}  inserted {rows} rows"
+        if rows!='updated':
+            if rows > 0:
+                subject = f"JOB SUCCESS - {tablename}  inserted {rows} rows"
+            else:
+                subject = f"JOB SUCCESS - {tablename} New Recent pdf file still not received."
+               
+            bu_alerts.bulog(process_name=processname,database=databasename,status='success',table_name=tablename,
+                row_count=rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
+            bu_alerts.send_mail(
+                receiver_email = receiver_email, 
+                mail_subject = subject,
+                mail_body=f'{tablename} completed successfully, Attached logs',
+                attachment_location = logfilename
+            )
         else:
-            subject = f"JOB SUCCESS - {tablename} New Recent pdf file still not received."
-
-        bu_alerts.send_mail(
-            receiver_email = receiver_email, 
-            mail_subject = subject,
-            mail_body=f'{tablename} completed successfully, Attached logs',
-            attachment_location = logfilename
-        )
-
+            print('updated')        
     except Exception as e:
         print("Exception caught during execution: ",e)
         logging.exception(f'Exception caught during execution: {e}')
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
         bu_alerts.bulog(process_name= processname,database=databasename,status='Failed',table_name=tablename,
-            row_count=rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
+            log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
 
         bu_alerts.send_mail(
             receiver_email = receiver_email,
