@@ -3,7 +3,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
 import logging
-import sys
 from selenium.webdriver.support import expected_conditions as EC
 import os
 from bu_config import get_config
@@ -66,8 +65,7 @@ def trade_date():
         Trade_date=df_date[0].columns[1]
         return Trade_date
     except Exception as e:
-        logging.exception("Exception in: trade_date()")
-        logging.exception(e)
+        logger.info(e)
         raise e
 
 
@@ -80,8 +78,7 @@ def num_to_col_letters(num):
             num = (num - 1) // 26
         return ''.join(reversed(letters))
     except Exception as e:
-        logging.exception("Exception in: num_to_col_letters()")
-        logging.exception(e)
+        logger.info(e)
         raise e
 
 
@@ -105,8 +102,7 @@ def remove_existing_files(files_location):
             print("No existing files available to reomve")
         print("Pause")
     except Exception as e:
-        logging.exception("Exception in: remove_existing_files()")
-        logging.exception(e)
+        logger.info(e)
         raise e
 
 
@@ -171,7 +167,7 @@ def login_and_download():
         logging.info('Clearing Search Bar')
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).clear()        # driver.find_element_by_xpath('/html/body/div[3]/div/div[1]/div/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div/div/div/div/div[1]/div/div[2]/div/input').clear()
         time.sleep(5)
-        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys(subject)
+        WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Search']"))).send_keys('Trident Volatility Report')
         time.sleep(5)
         WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Search']//span[@data-automationid='splitbuttonprimary']"))).click()
         logging.info('Clicking recent mail')
@@ -204,8 +200,6 @@ def login_and_download():
                 logging.info('driver quit failed')
                 print("driver quit failed")
     except Exception as e:
-        logging.exception("Exception in: login_and_download()")
-        logging.exception(e)
         raise e 
 
 
@@ -238,9 +232,8 @@ def refactoring_dataframe(Trade_date,structure_name,dataframe):
         dataframe['UPDATEDATE'] = str(datetime.now())
         return dataframe
     except Exception as e:
-        logging.exception("Exception in: refactoring_dataframe()")
-        logging.exception(e)
-        raise e 
+        logger.exception(f"error occurred : {e}")
+        raise(e)  
 
 
 def read_pdf(Trade_date):
@@ -301,10 +294,8 @@ def read_pdf(Trade_date):
                 break
         return df0,df1,df2
     except Exception as e:
-        logging.exception("Exception in: read_pdf()")
-        logging.exception(e)
-        raise e 
-        
+        logger.info(e)
+        print(e) 
 def convert_datetime(dt):
     try:
         return str(datetime.strptime(dt,'%m/%d/%y'))
@@ -366,33 +357,25 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
         # df["OPTION_EXPIRY"] = pd.to_datetime(pd.Series(df["OPTION_EXPIRY"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         # df['TRADE_DAYS_TO_EXPIRY'] = [float(x.replace('#N/A','0.0')) if x=='#N/A' else x for x in df['TRADE_DAYS_TO_EXPIRY'] ]
         # df['TRADE_DAYS_TO_EXPIRY'] = [float(x) if x=='0.0' else x for x in df['TRADE_DAYS_TO_EXPIRY'] ]
-        try:
-            df['FUTURES_PRICE'] =[float(x) if x=='nan' else x for x in df['FUTURES_PRICE']]  
-            df['BREAK_EVEN'] =[float(x) if x=='nan' else x for x in df['BREAK_EVEN']]
-            df['REAL_VOL_30_DAY'] =[float(x) if x=='nan' else x for x in df['BREAK_EVEN']]
-        except Exception as e:
-            logging.exception("Exception in: converting nan to NAN in Float type columns")
-            logging.exception(e)
         return df    
     except Exception as e:
-        logging.exception("Exception in: csv_to_dataframe()")
-        logging.exception(e)
-        raise e 
-        
+        logger.exception(f"Error occurred during csv to dataframe conversion {e}")
+        raise e
+
 
 def snowflake_dump(df):
     '''uploaded  the dataframe   in snowflake '''
 
     logger.info("creating engine object and providing credentials")
     engine = bu_snowflake.get_engine(
-            role= f"OWNER_{database_name}",
-            schema= schema_name,
-            database= database_name
+            role= f"OWNER_{Database}",
+            schema= SCHEMA,
+            database= Database
             )
     logger.info("connection initaited")        
     try:
         logger.info("query to check data")
-        query = f"select * from {database_name}.{schema_name}.{table_name} where TRADE_DATE = '{df['TRADE_DATE'][0]}'"       
+        query = f"select * from {Database}.{SCHEMA}.{table_name} where TRADE_DATE = '{df['TRADE_DATE'][0]}'"       
         logger.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
@@ -403,16 +386,18 @@ def snowflake_dump(df):
                 no_of_rows=len(df)
         return no_of_rows 
     except Exception as e:
-        logging.exception("Exception in: snowflake_dump()")
-        logging.exception(e)
-        raise e 
-        
+        logger.exception(f"error occurred : {e}")
+        raise(e)
     finally:
         engine.dispose()
 
 
 def main():
     try:
+        no_of_rows=0
+        log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
+        bu_alerts.bulog(process_name=processname,database=Database,status='Started',table_name='',
+            row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logger.info("into remove_existing_files funtion")
         remove_existing_files(files_location)
         logger.info("into login_and_download")
@@ -425,85 +410,71 @@ def main():
         logger.info("into snowflake_dump")
         no_of_rows=snowflake_dump(df)  
         logger.info("appending file for mail")
-        return no_of_rows,Trade_date
-    except Exception as e:
-        logging.exception("Exception while in main function")
-        logging.exception(e)
-        raise e
-
-if __name__ == "__main__": 
-    try:    
-        logging.info("Execution Started")
-        time_start=time.time()
-        today_date=date.today()
-        for handler in logging.root.handlers[:]:
-            logging.root.removeHandler(handler)
-        # log progress --
-        logfile = os.getcwd() +"\\logs\\"+'TRIDENT_'+str(today_date)+'.txt'
-        logging.basicConfig(level=logging.INFO,filename=logfile,filemode='w',format='[line :- %(lineno)d] %(asctime)s [%(levelname)s] - %(message)s ')
-
-        logger = logging.getLogger()
-        logger.setLevel(logging.INFO)
-        job_id=np.random.randint(1000000,9999999)
-        log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
-        no_of_rows=0
-        logging.info('setting paTH TO DOWNLOAD')
-        path = os.getcwd() + "\\"+"Download"
-        logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
-        
-        credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
-        username = credential_dict['USERNAME']
-        password = credential_dict['PASSWORD']
-        table_name = credential_dict['TABLE_NAME']
-        database_name = credential_dict['DATABASE']
-        #database_name = "POWERDB_DEV"
-        schema_name = credential_dict['TABLE_SCHEMA']
-        subject = credential_dict['API_KEY']
-
-        #receiver_email = 'enoch.benjamin@biourja.com'
-        receiver_email = credential_dict['EMAIL_LIST']#'enoch.benjamin@biourja.com' 
-        download_path=os.getcwd() + "\\Download"
-        output_location= os.getcwd()+"\\Generated_CSV"
-        today_date=date.today()
-        processname = credential_dict['PROJECT_NAME']
-        process_owner = credential_dict['IT_OWNER']
-        logging.info("Creating required directories")
-        directories_created=["Download","Logs","Generated_CSV"]
-        for directory in directories_created:
-            path3 = os.path.join(os.getcwd(),directory)  
-            try:
-                os.makedirs(path3, exist_ok = True)
-                print("Directory '%s' created successfully" % directory)
-            except OSError as error:
-                print("Directory '%s' can not be created" % directory)             
-        files_location=os.getcwd() + "\\Download"
-        filesToUpload = os.listdir(os.getcwd() + "\\Download")
-        job_name='TRIDENT_EOD_DAILY_VOLATILITY_AUTOMATION'
-        logging.info("Into the main function")
-        log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
-        
-        bu_alerts.bulog(process_name=processname,database=database_name,status='Started',table_name='',
-            row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
-
-        
-        no_of_rows,Trade_date=main()
-
-        bu_alerts.bulog(process_name=processname,database=database_name,status='Completed',table_name='',
+        bu_alerts.bulog(process_name=processname,database=Database,status='Completed',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)     
         # locations_list.append(logfile)
         if no_of_rows>0:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {Trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {Trade_date} file updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
         else:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Data For {Trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
-
-        time_end=time.time()
-        logging.info(f'It takes {time_start-time_end} seconds to run')
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Already data inserted previously of {Trade_date} file and NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
     except Exception as e:
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
-        bu_alerts.bulog(process_name= 'TRIDENT_EOD_DAILY_VOLATILITY',database='POWERDB',status='Failed',table_name='',
-            row_count=0, log=log_json, warehouse='ITPYTHON_WH',process_owner='Enoch Benjamin')
+        bu_alerts.bulog(process_name= processname,database=Database,status='Failed',table_name='',
+            row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logging.exception(str(e))
         bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
-        sys.exit(1)
+
+
+if __name__ == "__main__": 
+    logging.info("Execution Started")
+    time_start=time.time()
+    today_date=date.today()
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+    # log progress --
+    logfile = os.getcwd() +"\\logs\\"+'TRIDENT_'+str(today_date)+'.txt'
+    logging.basicConfig(level=logging.INFO,filename=logfile,filemode='w',format='[line :- %(lineno)d] %(asctime)s [%(levelname)s] - %(message)s ')
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logging.info('setting paTH TO DOWNLOAD')
+    path = os.getcwd() + "\\"+"Download"
+    logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
+
+    credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
+    username = credential_dict['USERNAME']
+    password = credential_dict['PASSWORD']
+    table_name = credential_dict['TABLE_NAME']
+    #Database = credential_dict['DATABASE']
+    Database = "POWERDB_DEV"
+    SCHEMA = credential_dict['TABLE_SCHEMA']
+
+    #receiver_email = credential_dict['EMAIL_LIST']
+    # receiver_email = "yashn.jain@biourja.com"
+
+    #receiver_email = credential_dict['EMAIL_LIST']#'enoch.benjamin@biourja.com' 
+    receiver_email = "enoch.benjamin@biourja.com,mrutunjaya.sahoo@biourja.com,radha.waswani@biourja.com"
+    download_path=os.getcwd() + "\\Download"
+    output_location= os.getcwd()+"\\Generated_CSV"
+    today_date=date.today()
+    job_id=np.random.randint(1000000,9999999)
+    processname = credential_dict['PROJECT_NAME']
+    process_owner = credential_dict['IT_OWNER']
+    logging.info("Creating required directories")
+    directories_created=["Download","Logs","Generated_CSV"]
+    for directory in directories_created:
+        path3 = os.path.join(os.getcwd(),directory)  
+        try:
+            os.makedirs(path3, exist_ok = True)
+            print("Directory '%s' created successfully" % directory)
+        except OSError as error:
+            print("Directory '%s' can not be created" % directory)             
+    files_location=os.getcwd() + "\\Download"
+    filesToUpload = os.listdir(os.getcwd() + "\\Download")
+    job_name='TEST:TRIDENT_EOD_DAILY_VOLATILITY_AUTOMATION'
+    logging.info("Into the main function")
+    main()
+    time_end=time.time()
+    logging.info(f'It takes {time_start-time_end} seconds to run')
 
 

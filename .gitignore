@@ -76,3 +76,4 @@ trident_old_files/
 # Per-project virtualenvs
 .venv*/
 venv*/
+geckodriver.exe
