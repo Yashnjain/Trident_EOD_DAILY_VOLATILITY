@@ -177,12 +177,11 @@ def login_and_download():
         logging.info('Clicking recent mail')
         time.sleep(5)
         try:
-            WebDriverWait(driver, 120, poll_frequency=1).until(EC.element_to_be_clickable(
+            WebDriverWait(driver, 150, poll_frequency=1).until(EC.element_to_be_clickable(
                 (By.XPATH,'/html/body/div[1]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[5]/div'))).click()
         except TimeoutError as e:
-            recent_mail=WebDriverWait(driver, 90, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/div/div/div/div[6]/div/div/div[1]/div[2]/div[4]/div/div/div/div/div[2]")))
-            time.sleep(2)
-            recent_mail.click()
+            logger.exception(f'downloading files error:{e}')
+            print(f'downloading files error:{e}')
         logging.info('Clicking more action button')
         time.sleep(15)
         WebDriverWait(driver, 120, poll_frequency=1).until(EC.element_to_be_clickable((By.XPATH, "//button[@title='More actions']"))).click()
