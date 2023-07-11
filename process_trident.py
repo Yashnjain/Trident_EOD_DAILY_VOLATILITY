@@ -425,8 +425,6 @@ if __name__ == "__main__":
     try:    
         starttime = datetime.now()
         job_id=np.random.randint(1000000,9999999)
-        for handler in logging.root.handlers[:]:
-            logging.root.removeHandler(handler)
         # Logging configuration
         for handler in logging.root.handlers[:]:
             logging.root.removeHandler(handler)
