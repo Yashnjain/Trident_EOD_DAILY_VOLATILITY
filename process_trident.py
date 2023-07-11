@@ -424,6 +424,7 @@ def main():
 if __name__ == "__main__": 
     try:    
         starttime = datetime.now()
+        job_id=np.random.randint(1000000,9999999)
         for handler in logging.root.handlers[:]:
             logging.root.removeHandler(handler)
         # Logging configuration
@@ -437,9 +438,8 @@ if __name__ == "__main__":
             format='%(asctime)s [%(levelname)s] - %(message)s',
             filename=log_file_location)
         logging.info('Execution Started')
-        logging.warning('{}: Start work at {} ...'.format(starttime.strftime('%Y-%m-%d %H:%M:%S')))
+        logging.warning('Start work at {} ...'.format(starttime.strftime('%Y-%m-%d %H:%M:%S')))
         credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
-        job_id=np.random.randint(1000000,9999999)
         job_name = credential_dict['PROJECT_NAME']
         username = credential_dict['USERNAME']
         password = credential_dict['PASSWORD']
@@ -490,7 +490,10 @@ if __name__ == "__main__":
         bu_alerts.bulog(process_name= 'TRIDENT_EOD_DAILY_VOLATILITY',database='POWERDB',status='Failed',table_name='',
             row_count=0, log=log_json, warehouse='ITPYTHON_WH',process_owner='Enoch Benjamin')
         logging.exception(str(e))
-        bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB FAILED -{job_name}',mail_body = f'{job_name} failed, Attached logs',attachment_location = logfile)
+        bu_alerts.send_mail(receiver_email = receiver_email,
+                            mail_subject =f'JOB FAILED - {job_name}',
+                            mail_body = f'{job_name} failed during execution, Attached logs',
+                            attachment_location = log_file_location)
         sys.exit(1)
 
 
