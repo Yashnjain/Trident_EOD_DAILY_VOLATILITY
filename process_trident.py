@@ -1,20 +1,20 @@
-from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
+import os
+import sys
 import time
 import logging
-import sys
-from selenium.webdriver.support import expected_conditions as EC
-import os
-from bu_config import get_config
-import bu_alerts
 import tabula
-import bu_snowflake
-import pandas as pd
-from snowflake.connector.pandas_tools import pd_writer
 import functools
-from datetime import date, datetime
+import bu_alerts
+import bu_snowflake
 import numpy as np
+import pandas as pd
+from datetime import date, datetime
+from bu_config import get_config
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from snowflake.connector.pandas_tools import pd_writer
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
@@ -63,8 +63,8 @@ def trade_date():
         file2=file_name[0]
         test_area_date = ["67,47,85,160"]
         df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
-        Trade_date=df_date[0].columns[1]
-        return Trade_date
+        trade_date=df_date[0].columns[1]
+        return trade_date
     except Exception as e:
         logging.exception("Exception in: trade_date()")
         logging.exception(e)
@@ -94,13 +94,13 @@ def remove_existing_files(files_location):
     Raises:
         e: _description_
     """           
-    logger.info("Inside remove_existing_files function")
+    logging.info("Inside remove_existing_files function")
     try:
         files = os.listdir(files_location)
         if len(files) > 0:
             for file in files:
                 os.remove(files_location + "\\" + file)
-            logger.info("Existing files removed successfully")
+            logging.info("Existing files removed successfully")
         else:
             print("No existing files available to reomve")
         print("Pause")
@@ -109,8 +109,7 @@ def remove_existing_files(files_location):
         logging.exception(e)
         raise e
 
-
-def login_and_download():  
+def login_and_download(url):
     '''This function downloads log in to the website'''
     try:
         options = Options()
@@ -123,12 +122,9 @@ def login_and_download():
         profile.set_preference('pdfjs.disabled', True)
         profile.update_preferences()
         logging.info('Adding firefox profile')
-        exe_path = r'S:\IT Dev\Production_Environment\trident_eod_daily_volatility-1\geckodriver.exe'
-        # exe_path = r'C:\Users\Yashn.jain\OneDrive - BioUrja Trading LLC\Power\trident_eod_daily_volatility'
-        # driver=webdriver.Firefox(executable_path=exe_path,firefox_profile=profile)
         driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
         logging.info('Accesing website')
-        driver.get("https://outlook.office365.com/owa/biourja.com/")
+        driver.get(url)
         time.sleep(1)
         driver.maximize_window()
         time.sleep(10)
@@ -180,7 +176,7 @@ def login_and_download():
             WebDriverWait(driver, 150, poll_frequency=1).until(EC.element_to_be_clickable(
                 (By.XPATH,'/html/body/div[1]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[5]/div'))).click()
         except TimeoutError as e:
-            logger.exception(f'downloading files error:{e}')
+            logging.exception(f'downloading files error:{e}')
             print(f'downloading files error:{e}')
         logging.info('Clicking more action button')
         time.sleep(15)
@@ -202,10 +198,9 @@ def login_and_download():
     except Exception as e:
         logging.exception("Exception in: login_and_download()")
         logging.exception(e)
-        raise e 
+        raise e
 
-
-def refactoring_dataframe(Trade_date,structure_name,dataframe):
+def refactoring_dataframe(trade_date,structure_name,dataframe):
     try:
         colList = list(dataframe.columns)
         for col in range(len(colList)):
@@ -229,7 +224,7 @@ def refactoring_dataframe(Trade_date,structure_name,dataframe):
                                 "IMP_VOL_10D_PUT","IMP_VOL_25D_PUT","IMP_VOL_ATM","IMP_VOL_10D_CALL","IMP_VOL_25D_CALL"]
         dataframe=dataframe.reindex(columns=columns_titles)
         dataframe.insert(0,'STRUCTURE_NAME',structure_name) 
-        dataframe.insert(0,'TRADE_DATE',Trade_date)
+        dataframe.insert(0,'TRADE_DATE',trade_date)
         dataframe['INSERTDATE'] = str(datetime.now())
         dataframe['UPDATEDATE'] = str(datetime.now())
         return dataframe
@@ -238,12 +233,11 @@ def refactoring_dataframe(Trade_date,structure_name,dataframe):
         logging.exception(e)
         raise e 
 
-
-def read_pdf(Trade_date):
+def read_pdf(trade_date):
     try:
         file_name= os.listdir(os.getcwd() + "\\Download")
         file2=file_name[0] 
-        logger.info("testing areas and column seperator values")
+        logging.info("testing areas and column seperator values")
         #new coordinates updated(1st table)
         column_values0=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
         test_area0 = ["273.488,43.911,515.993,547.281"]
@@ -263,37 +257,37 @@ def read_pdf(Trade_date):
         # column_values1=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]
         # test_area1=["282.996","50.0","508","568"]
 
-        logger.info("reading full page tables")
+        logging.info("reading full page tables")
         df = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="all",silent=True,guess=False)
         for index, page in enumerate(df):
-            logger.info("applying check for index and extracting tables")
+            logging.info("applying check for index and extracting tables")
             if index == 0:
-                logger.info("picking up structure name from the table")
+                logging.info("picking up structure name from the table")
                 test_area_structure = ["274.253,1.071,295.673,606.951"] #changed
                 df_structure = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_structure,silent=True,guess=False)
                 structure_name=df_structure[0].columns[0]
-                logger.info("picking up table and converting it to csv")
+                logging.info("picking up table and converting it to csv")
                 df0=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area0,columns=column_values0,silent=True,guess=False)[0]  
-                logger.info("trimming the table")
-                df0=refactoring_dataframe(Trade_date,structure_name,df0)
+                logging.info("trimming the table")
+                df0=refactoring_dataframe(trade_date,structure_name,df0)
                 #for second table
-                logger.info("picking up structure name from the table")
+                logging.info("picking up structure name from the table")
                 test_area_structure2 = ["506.813,0.306,526.703,611.541"] #changed
                 df_structure2 = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_structure2,silent=True,guess=False)
                 structure_name=df_structure2[0].columns[0]
-                logger.info("picking up table and converting it to csv")
+                logging.info("picking up table and converting it to csv")
                 df1=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area2,columns=column_values2,silent=True,guess=False)[0]    
-                logger.info("trimming the table")
-                df1=refactoring_dataframe(Trade_date,structure_name,df1)
+                logging.info("trimming the table")
+                df1=refactoring_dataframe(trade_date,structure_name,df1)
             if index == 1:
-                logger.info("picking up structure name from the table")
+                logging.info("picking up structure name from the table")
                 test_area_structure3 = ["250.538,1.071,278.843,611.541"]#changed
                 df_structure3 = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index+1],area=test_area_structure3,silent=True,guess=False)
                 structure_name=df_structure3[0].columns[0]
-                logger.info("picking up table and converting it to csv")
+                logging.info("picking up table and converting it to csv")
                 df2=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area1,columns=column_values1,silent=True,guess=False)[0]    
-                logger.info("trimming the table")
-                df2=refactoring_dataframe(Trade_date,structure_name,df2)
+                logging.info("trimming the table")
+                df2=refactoring_dataframe(trade_date,structure_name,df2)
                 break
         return df0,df1,df2
     except Exception as e:
@@ -306,22 +300,22 @@ def convert_datetime(dt):
         return str(datetime.strptime(dt,'%m/%d/%y'))
     except ValueError:
         return np.nan
+
 def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
     ''' convert into csv file to dataframe'''
-    
     try:
-        logger.info("into csv_to_dataframe")
+        logging.info("into csv_to_dataframe")
         # csvsToUpload = os.listdir(f"{output_location}")
-        # logger.info("creating empty dataframe")
+        # logging.info("creating empty dataframe")
         df = pd.DataFrame()
-        logger.info("appending individual dataframes to single empty dataframe")
+        logging.info("appending individual dataframes to single empty dataframe")
         # for files in csvsToUpload:
         #     data = pd.read_csv (f"{output_location}\\{files}")   
         #     df1 = pd.DataFrame(data)
         df = df.append([dataframe1,dataframe2,dataframe3], ignore_index=True)
-        logger.info("deleting non required column")
+        logging.info("deleting non required column")
         del df['ATM_IMP_VOL']
-        logger.info("applying various operations on dataframe")
+        logging.info("applying various operations on dataframe")
         list2=["FUTURES_PRICE","ATM_STRADDLE","BREAK_EVEN"]
         for values in list2: 
             df[values]  = [x[values].replace('$', '') for i, x in df.iterrows()]    
@@ -351,7 +345,7 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
             df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
             # df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
         except Exception as e:
-            logger.exception(f"conversion to datetime for Trade date column failed, {e}")
+            logging.exception(f"conversion to datetime for Trade date column failed, {e}")
         #df["OPTION_EXPIRY"]=convert_string(df["OPTION_EXPIRY"])
         try:
             df["OPTION_EXPIRY"] = pd.to_datetime(df["OPTION_EXPIRY"],format='%m/%d/%y').astype(str)
@@ -379,17 +373,17 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
 def snowflake_dump(df):
     '''uploaded  the dataframe   in snowflake '''
 
-    logger.info("creating engine object and providing credentials")
+    logging.info("creating engine object and providing credentials")
     engine = bu_snowflake.get_engine(
             role= f"OWNER_{database_name}",
             schema= schema_name,
             database= database_name
             )
-    logger.info("connection initaited")        
+    logging.info("connection initaited")  
     try:
-        logger.info("query to check data")
+        logging.info("query to check data")
         query = f"select * from {database_name}.{schema_name}.{table_name} where TRADE_DATE = '{df['TRADE_DATE'][0]}'"       
-        logger.info("applying check for values in snowflake table and inserting data")
+        logging.info("applying check for values in snowflake table and inserting data")
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
             if len(db_df)>0:
@@ -409,19 +403,19 @@ def snowflake_dump(df):
 
 def main():
     try:
-        logger.info("into remove_existing_files funtion")
+        logging.info("into remove_existing_files funtion")
         remove_existing_files(files_location)
-        logger.info("into login_and_download")
-        login_and_download()
-        Trade_date=trade_date()
-        logger.info("into read_pdf")
-        df0,df1,df2=read_pdf(Trade_date)
-        logger.info("into csv_to_dataframe")
+        logging.info("into login_and_download")
+        login_and_download(url)
+        trade_date = trade_date()
+        logging.info("into read_pdf")
+        df0,df1,df2 = read_pdf(trade_date)
+        logging.info("into csv_to_dataframe")
         df=csv_to_dataframe(df0,df1,df2)
-        logger.info("into snowflake_dump")
+        logging.info("into snowflake_dump")
         no_of_rows=snowflake_dump(df)  
-        logger.info("appending file for mail")
-        return no_of_rows,Trade_date
+        logging.info("appending file for mail")
+        return no_of_rows,trade_date
     except Exception as e:
         logging.exception("Exception while in main function")
         logging.exception(e)
@@ -429,25 +423,24 @@ def main():
 
 if __name__ == "__main__": 
     try:    
-        logging.info("Execution Started")
-        time_start=time.time()
-        today_date=date.today()
+        starttime = datetime.now()
         for handler in logging.root.handlers[:]:
             logging.root.removeHandler(handler)
-        # log progress --
-        logfile = os.getcwd() +"\\logs\\"+'TRIDENT_'+str(today_date)+'.txt'
-        logging.basicConfig(level=logging.INFO,filename=logfile,filemode='w',format='[line :- %(lineno)d] %(asctime)s [%(levelname)s] - %(message)s ')
-
-        logger = logging.getLogger()
-        logger.setLevel(logging.INFO)
-        job_id=np.random.randint(1000000,9999999)
-        log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
-        no_of_rows=0
-        logging.info('setting paTH TO DOWNLOAD')
-        path = os.getcwd() + "\\"+"Download"
-        logging.info('SETTING PROFILE SETTINGS FOR FIREFOX')
-        
+        # Logging configuration
+        for handler in logging.root.handlers[:]:
+            logging.root.removeHandler(handler)
+        log_file_location = os.getcwd() +"\\logs\\"+'TRIDENT_LOG.txt'
+        if os.path.isfile(log_file_location):
+            os.remove(log_file_location)
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s [%(levelname)s] - %(message)s',
+            filename=log_file_location)
+        logging.info('Execution Started')
+        logging.warning('{}: Start work at {} ...'.format(starttime.strftime('%Y-%m-%d %H:%M:%S')))
         credential_dict = get_config('TRIDENT_EOD_DAILY_VOLATILITY','TRIDENT_EOD_DAILY_VOLATILITY')
+        job_id=np.random.randint(1000000,9999999)
+        job_name = credential_dict['PROJECT_NAME']
         username = credential_dict['USERNAME']
         password = credential_dict['PASSWORD']
         table_name = credential_dict['TABLE_NAME']
@@ -455,16 +448,22 @@ if __name__ == "__main__":
         #database_name = "POWERDB_DEV"
         schema_name = credential_dict['TABLE_SCHEMA']
         subject = credential_dict['API_KEY']
-
+        url = credential_dict['SOURCE_URL']
         #receiver_email = 'enoch.benjamin@biourja.com'
-        receiver_email = credential_dict['EMAIL_LIST']#'enoch.benjamin@biourja.com' 
-        download_path=os.getcwd() + "\\Download"
-        output_location= os.getcwd()+"\\Generated_CSV"
-        today_date=date.today()
+        receiver_email = credential_dict['EMAIL_LIST']
         processname = credential_dict['PROJECT_NAME']
         process_owner = credential_dict['IT_OWNER']
+        no_of_rows=0
+        log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
+        bu_alerts.bulog(process_name=processname,database=database_name,status='Started',table_name='',
+            row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
+        logging.info('Setting path to download')
+        path = os.getcwd() + "\\"+"Download"
+        download_path=os.getcwd() + "\\download"
+        output_location= os.getcwd()+"\\generated_csv"
+        today_date=date.today()
         logging.info("Creating required directories")
-        directories_created=["Download","Logs","Generated_CSV"]
+        directories_created=["download","logs","generated_csv"]
         for directory in directories_created:
             path3 = os.path.join(os.getcwd(),directory)  
             try:
@@ -474,26 +473,18 @@ if __name__ == "__main__":
                 print("Directory '%s' can not be created" % directory)             
         files_location=os.getcwd() + "\\Download"
         filesToUpload = os.listdir(os.getcwd() + "\\Download")
-        job_name='TRIDENT_EOD_DAILY_VOLATILITY_AUTOMATION'
-        logging.info("Into the main function")
-        log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
-        
-        bu_alerts.bulog(process_name=processname,database=database_name,status='Started',table_name='',
-            row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
-
-        
-        no_of_rows,Trade_date=main()
+        logging.info("Into the main function")   
+        no_of_rows,trade_date = main()
 
         bu_alerts.bulog(process_name=processname,database=database_name,status='Completed',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)     
-        # locations_list.append(logfile)
         if no_of_rows>0:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {Trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
         else:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Data For {Trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Data For {trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
 
-        time_end=time.time()
-        logging.info(f'It takes {time_start-time_end} seconds to run')
+        endtime=datetime.now()
+        logging.warning('Total time taken: {} seconds'.format((endtime-starttime).total_seconds()))
     except Exception as e:
         log_json='[{"JOB_ID": "'+str(job_id)+'","CURRENT_DATETIME": "'+str(datetime.now())+'"}]'
         bu_alerts.bulog(process_name= 'TRIDENT_EOD_DAILY_VOLATILITY',database='POWERDB',status='Failed',table_name='',
