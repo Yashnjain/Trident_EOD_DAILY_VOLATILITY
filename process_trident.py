@@ -57,7 +57,7 @@ def convert_string(k):
     except ValueError as e:
         return ''
 
-def trade_date():
+def get_trade_date():
     try:
         file_name= os.listdir(os.getcwd() + "\\Download")
         file2=file_name[0]
@@ -66,7 +66,7 @@ def trade_date():
         trade_date=df_date[0].columns[1]
         return trade_date
     except Exception as e:
-        logging.exception("Exception in: trade_date()")
+        logging.exception("Exception in: get_trade_date()")
         logging.exception(e)
         raise e
 
@@ -395,8 +395,7 @@ def snowflake_dump(df):
     except Exception as e:
         logging.exception("Exception in: snowflake_dump()")
         logging.exception(e)
-        raise e 
-        
+        raise e
     finally:
         engine.dispose()
 
@@ -407,7 +406,7 @@ def main():
         remove_existing_files(files_location)
         logging.info("into login_and_download")
         login_and_download(url)
-        trade_date = trade_date()
+        trade_date = get_trade_date()
         logging.info("into read_pdf")
         df0,df1,df2 = read_pdf(trade_date)
         logging.info("into csv_to_dataframe")
@@ -477,9 +476,9 @@ if __name__ == "__main__":
         bu_alerts.bulog(process_name=processname,database=database_name,status='Completed',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)     
         if no_of_rows>0:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = log_file_location)
         else:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Data For {trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = logfile)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Data For {trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = log_file_location)
 
         endtime=datetime.now()
         logging.warning('Total time taken: {} seconds'.format((endtime-starttime).total_seconds()))
