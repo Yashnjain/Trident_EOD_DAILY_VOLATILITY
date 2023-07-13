@@ -122,7 +122,8 @@ def login_and_download(url):
         profile.set_preference('pdfjs.disabled', True)
         profile.update_preferences()
         logging.info('Adding firefox profile')
-        driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
+        # driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=GeckoDriverManager().install())
+        driver = webdriver.Firefox(firefox_profile=profile,options=options, executable_path=exe_path)
         logging.info('Accesing website')
         driver.get(url)
         time.sleep(1)
@@ -456,6 +457,7 @@ if __name__ == "__main__":
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)
         logging.info('Setting path to download')
         path = os.getcwd() + "\\"+"Download"
+        exe_path = os.getcwd() + '\\geckodriver.exe'
         download_path=os.getcwd() + "\\download"
         output_location= os.getcwd()+"\\generated_csv"
         today_date=date.today()
