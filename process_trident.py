@@ -62,7 +62,8 @@ def get_trade_date():
         logging.info("Inside get_trade_date() function")
         file_name= os.listdir(os.getcwd() + "\\Download")
         file2=file_name[0]
-        test_area_date = ["67","47","85","160"]
+        # test_area_date = ["67","47","85","160"]
+        test_area_date=["70.763","43.605","83.003","145.35"]
         df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
         trade_date=df_date[0].columns[1]
         return trade_date
