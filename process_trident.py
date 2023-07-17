@@ -65,9 +65,10 @@ def get_trade_date():
         # test_area_date = ["67","47","85","160"]
         # test_area_date=["56.993","-0.704","93.713","332.836"]
         # test_area_date=["70.763","43.605","83.003","145.35"]
-        test_area_date=["8.798","1.591","272.723","172.186"]
-        df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
-        trade_date=df_date[0].columns[1]
+        # test_area_date=["8.798","1.591","272.723","172.186"]
+        trade_date=file2.split(' ')[-1].split('.')[0]
+        # df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
+        # trade_date=df_date[0].columns[1]
         return trade_date
     except Exception as e:
         logging.exception("Exception in: get_trade_date()")
@@ -350,7 +351,8 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
         # df["UPDATEDATE"] = pd.to_datetime(pd.Series(df["UPDATEDATE"])).apply(lambda x: datetime.strftime(x, "%Y-%m-%d"))
         try:
             # df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
-            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
+            # df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
+            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m-%d-%Y').astype(str)
             # df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
         except Exception as e:
             logging.exception(f"conversion to datetime for Trade date column failed, {e}")
