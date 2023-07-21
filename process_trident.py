@@ -62,13 +62,9 @@ def get_trade_date():
         logging.info("Inside get_trade_date() function")
         file_name= os.listdir(os.getcwd() + "\\Download")
         file2=file_name[0]
-        # test_area_date = ["67","47","85","160"]
-        # test_area_date=["56.993","-0.704","93.713","332.836"]
-        # test_area_date=["70.763","43.605","83.003","145.35"]
-        # test_area_date=["8.798","1.591","272.723","172.186"]
-        trade_date=file2.split(' ')[-1].split('.')[0]
-        # df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
-        # trade_date=df_date[0].columns[1]
+        test_area_date = ["67,47,85,160"]
+        df_date = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_date,silent=True,guess=False)
+        trade_date=df_date[0].columns[1]
         return trade_date
     except Exception as e:
         logging.exception("Exception in: get_trade_date()")
@@ -241,27 +237,26 @@ def refactoring_dataframe(trade_date,structure_name,dataframe):
         logging.exception(e)
         raise e 
 
-def read_pdf(trade_date):
+def read_pdf(Trade_date):
     try:
-        logging.info("Inside read_pdf() function")
         file_name= os.listdir(os.getcwd() + "\\Download")
         file2=file_name[0] 
         logging.info("testing areas and column seperator values")
         #new coordinates updated(1st table)
         column_values0=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
-        test_area0 = ["273.488","43.911","515.993","547.281"]
+        test_area0 = ["273.488,43.911,515.993,547.281"]
         #old coordinates
         # column_values0=["82","114","151","181","213","242","273","296","327","357","391","420","450","481","509","539"]
         # test_area0 = ["293.378,50,526.173,569.543"]
         #new coordinates updated
-        test_area2=["506.813","43.911","571.838","545.751"]
+        test_area2=["506.813,43.911,571.838,545.751"]
         column_values2=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
         #old coordinates
         # test_area2=["530.0","50.0","584","568"]
         # column_values2=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]    
         #new coordinates updated
         column_values1=["76","107","141","172","201","231","259","282.5","312","341","373","402","431","459","487","517"]
-        test_area1=["257.423","-0.459","497.633","603.891"]
+        test_area1=["257.423,-0.459,497.633,603.891"]
         #old coordinates
         # column_values1=["82","114","151","181","213","242","272","296","327","357","391","420","450","481","509","539"]
         # test_area1=["282.996","50.0","508","568"]
@@ -272,31 +267,31 @@ def read_pdf(trade_date):
             logging.info("applying check for index and extracting tables")
             if index == 0:
                 logging.info("picking up structure name from the table")
-                test_area_structure = ["274.253","1.071","295.673","606.951"] #changed
+                test_area_structure = ["274.253,1.071,295.673,606.951"] #changed
                 df_structure = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_structure,silent=True,guess=False)
                 structure_name=df_structure[0].columns[0]
                 logging.info("picking up table and converting it to csv")
                 df0=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area0,columns=column_values0,silent=True,guess=False)[0]  
                 logging.info("trimming the table")
-                df0=refactoring_dataframe(trade_date,structure_name,df0)
+                df0=refactoring_dataframe(Trade_date,structure_name,df0)
                 #for second table
                 logging.info("picking up structure name from the table")
-                test_area_structure2 = ["506.813","0.306","526.703","611.541"] #changed
+                test_area_structure2 = ["506.813,0.306,526.703,611.541"] #changed
                 df_structure2 = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages="1",area=test_area_structure2,silent=True,guess=False)
                 structure_name=df_structure2[0].columns[0]
                 logging.info("picking up table and converting it to csv")
                 df1=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area2,columns=column_values2,silent=True,guess=False)[0]    
                 logging.info("trimming the table")
-                df1=refactoring_dataframe(trade_date,structure_name,df1)
+                df1=refactoring_dataframe(Trade_date,structure_name,df1)
             if index == 1:
                 logging.info("picking up structure name from the table")
-                test_area_structure3 = ["250.538","1.071","278.843","611.541"]#changed
+                test_area_structure3 = ["250.538,1.071,278.843,611.541"]#changed
                 df_structure3 = tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index+1],area=test_area_structure3,silent=True,guess=False)
                 structure_name=df_structure3[0].columns[0]
                 logging.info("picking up table and converting it to csv")
                 df2=tabula.read_pdf(download_path + '\\' + file2,lattice=True,stream=True, multiple_tables=True,pages=[index + 1],area=test_area1,columns=column_values1,silent=True,guess=False)[0]    
                 logging.info("trimming the table")
-                df2=refactoring_dataframe(trade_date,structure_name,df2)
+                df2=refactoring_dataframe(Trade_date,structure_name,df2)
                 break
         return df0,df1,df2
     except Exception as e:
@@ -352,7 +347,7 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
         try:
             # df["INSERTDATE"] = pd.to_datetime(df["INSERTDATE"],format='%m/%d/%Y').astype(str)
             # df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
-            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m-%d-%Y').astype(str)
+            df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"],format='%m/%d/%Y').astype(str)
             # df["UPDATEDATE"] = pd.to_datetime(df["UPDATEDATE"],format='%m/%d/%Y').astype(str)
         except Exception as e:
             logging.exception(f"conversion to datetime for Trade date column failed, {e}")
@@ -369,11 +364,11 @@ def csv_to_dataframe(dataframe1,dataframe2,dataframe3):
         try:
             df['FUTURES_PRICE'] =[float(x) if x=='nan' else x for x in df['FUTURES_PRICE']]  
             df['BREAK_EVEN'] =[float(x) if x=='nan' else x for x in df['BREAK_EVEN']]
-            df['REAL_VOL_30_DAY'] =[float(x) if x=='nan' else x for x in df['BREAK_EVEN']]
+            df['REAL_VOL_30_DAY'] =[float(x) if x=='nan' else x for x in df['REAL_VOL_30_DAY']]
         except Exception as e:
             logging.exception("Exception in: converting nan to NAN in Float type columns")
             logging.exception(e)
-        return df    
+        return df
     except Exception as e:
         logging.exception("Exception in: csv_to_dataframe()")
         logging.exception(e)
@@ -397,6 +392,7 @@ def snowflake_dump(df):
         with engine.connect() as con:
             db_df = pd.read_sql_query(query, con)
             if len(db_df)>0:
+                logging.info(f"Data for {df['TRADE_DATE'][0]} file already exist in table.")
                 no_of_rows=0
             else:
                 df.to_sql('TRIDENT_EOD_DAILY_VOLATILITY', con=con,if_exists='append',index = False,method=functools.partial(pd_writer, quote_identifiers=False))
@@ -487,9 +483,13 @@ if __name__ == "__main__":
         bu_alerts.bulog(process_name=processname,database=database_name,status='Completed',table_name='',
             row_count=no_of_rows, log=log_json, warehouse='ITPYTHON_WH',process_owner=process_owner)     
         if no_of_rows>0:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows of {trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = log_file_location)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and {no_of_rows} rows \
+                                of {trade_date} updated',mail_body = f'{job_name} completed successfully, Attached Logs',
+                                attachment_location = log_file_location)
         else:
-            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and Data For {trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',attachment_location = log_file_location)
+            bu_alerts.send_mail(receiver_email = receiver_email,mail_subject =f'JOB SUCCESS - {job_name} and \
+                                Data For {trade_date} file already inserted. NO NEW DATA FOUND',mail_body = f'{job_name} completed successfully, Attached Logs',
+                                attachment_location = log_file_location)
 
         endtime=datetime.now()
         logging.warning('Total time taken: {} seconds'.format((endtime-starttime).total_seconds()))
