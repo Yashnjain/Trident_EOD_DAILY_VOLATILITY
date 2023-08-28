@@ -179,8 +179,8 @@ def login_and_download(url):
             # WebDriverWait(driver, 150, poll_frequency=1).until(EC.element_to_be_clickable(
                 # (By.XPATH,'/html/body/div[1]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div[5]/div'))).click()
             WebDriverWait(driver, 150, poll_frequency=1).until(EC.element_to_be_clickable(
-                (By.XPATH,'/html/body/div[1]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/div/div[2]/div[1]/div[1]/div/div/ \
-                 div/div/div/div/div/div[5]/div/div[2]/div/div/div[2]/div[2]/div[4]/div'))).click()       
+                (By.XPATH,'/html/body/div[1]/div/div[2]/div/div[2]/div[2]/div/div/div/div[3]/div/div[2]/div[1]/div[1]\
+                 /div/div/div/div/div/div/div/div[5]/div/div[2]/div/div/div[2]/div[2]/div[2]/div[2]'))).click()       
         except TimeoutError as e:
             logging.exception(f'downloading files error:{e}')
             print(f'downloading files error:{e}')
