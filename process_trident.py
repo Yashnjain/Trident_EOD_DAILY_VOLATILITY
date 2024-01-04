@@ -456,7 +456,7 @@ if __name__ == "__main__":
         password = credential_dict['PASSWORD']
         table_name = credential_dict['TABLE_NAME']
         database_name = credential_dict['DATABASE']
-        #database_name = "POWERDB_DEV"
+        # database_name = "POWERDB_DEV"
         schema_name = credential_dict['TABLE_SCHEMA']
         subject = credential_dict['API_KEY']
         url = credential_dict['SOURCE_URL']
