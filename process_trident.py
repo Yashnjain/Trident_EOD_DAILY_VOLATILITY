@@ -512,4 +512,5 @@ if __name__ == "__main__":
                             attachment_location = log_file_location)
         sys.exit(1)
 
-
+    finally:
+        print('process completed')

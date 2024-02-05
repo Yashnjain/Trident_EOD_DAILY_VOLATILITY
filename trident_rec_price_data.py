@@ -404,3 +404,5 @@ if __name__ == '__main__':
             mail_body=f'{tablename} failed during execution, Attached logs',
             attachment_location = log_file_location
         )
+    finally:
+        print('process completed')        
